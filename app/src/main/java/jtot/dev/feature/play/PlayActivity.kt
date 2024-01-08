@@ -1,11 +1,10 @@
-package jtot.dev.views
+package jtot.dev.feature.play
 
 import android.os.Bundle
 import jtot.dev.R
-import jtot.dev.adpater.ContentAdapter
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityPlayBinding
-import jtot.dev.decoration.ContentDecoration
+import jtot.dev.feature.play.decoration.ContentDecoration
 import jtot.dev.model.Schedule
 import jtot.dev.model.Todo
 import jtot.dev.utils.createStringDummy

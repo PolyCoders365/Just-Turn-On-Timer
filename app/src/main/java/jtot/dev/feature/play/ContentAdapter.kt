@@ -1,4 +1,4 @@
-package jtot.dev.adpater
+package jtot.dev.feature.play
 
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import jtot.dev.R
 import jtot.dev.databinding.ItemContentBinding
 import jtot.dev.databinding.ItemContentTodoBinding
-import jtot.dev.decoration.ContentDecoration
-import jtot.dev.decoration.ToggleAnimation
+import jtot.dev.feature.play.decoration.ContentDecoration
+import jtot.dev.feature.play.decoration.ToggleAnimation
 import jtot.dev.model.Todo
 import jtot.dev.utils.dpToPixel
 

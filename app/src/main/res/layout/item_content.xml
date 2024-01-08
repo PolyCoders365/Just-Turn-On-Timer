@@ -15,6 +15,7 @@
 
 
         <EditText
+            android:id="@+id/et_content"
             android:text="@{content}"
             tools:text ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
             style="@style/text.body_medium"
