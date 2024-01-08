@@ -1,4 +1,4 @@
-package jtot.dev.decoration
+package jtot.dev.feature.play.decoration
 
 import android.view.View
 import android.view.ViewGroup
