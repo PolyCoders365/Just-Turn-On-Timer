@@ -6,6 +6,10 @@
 
     <color name="primary">#6750A4</color>
     <color name="tertiary">#7D5260</color>
+    <color name="tertiary99">#FFFBFA</color>
+    <color name="tertiary95">#FFECF1</color>
+    <color name="tertiary80">#EFB8C8</color>
+
     <color name="tertiary_container">#FFD8E4</color>
     <color name="on_surface_variant">#49454F</color>
     <color name="outline_variant">#CAC4D0</color>
