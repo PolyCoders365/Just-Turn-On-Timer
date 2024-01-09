@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/mcv_main_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mcv_selectionColor="@color/primary"
+            app:mcv_showOtherDates="all" />
+
+        <TextView
+            android:id="@+id/tv_main_todo"
+            style="@style/text.title_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="41dp"
+            android:paddingStart="30dp"
+            android:text="TODO"
+            app:layout_constraintStart_toStartOf="@id/mcv_main_calendar"
+            app:layout_constraintTop_toBottomOf="@id/mcv_main_calendar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_main_todo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="15dp"
+            android:padding="30dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/tv_main_todo"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_todo"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main_rv_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_border_container"
+            android:paddingVertical="60dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="@id/tv_main_todo"
+            app:layout_constraintTop_toBottomOf="@id/tv_main_todo">
+
+            <TextView
+                android:id="@+id/tv_main_empty_info"
+                style="@style/text.title_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아직 할 일을 설정하지 않았어요!"
+                app:layout_constraintBottom_toTopOf="@id/btn_main_add_todo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_main_add_todo"
+                style="@style/text.title_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="할 일 추가"
+                android:drawableLeft="@drawable/ic_add_18"
+                android:drawablePadding="8dp"
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/white"
+                android:background="@drawable/rounded_border_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_main_empty_info"
+                app:layout_constraintStart_toStartOf="@id/tv_main_empty_info"
+                app:layout_constraintTop_toBottomOf="@id/tv_main_empty_info" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
