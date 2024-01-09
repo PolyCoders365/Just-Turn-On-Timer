@@ -65,4 +65,12 @@ dependencies {
     def materialCalenderViewVersion = "2.0.1"
     implementation "com.github.prolificinteractive:material-calendarview:$materialCalenderViewVersion"
 
+    // room DB
+    def roomVersion = "2.5.0"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // gson
+    implementation 'com.google.code.gson:gson:2.10'
 }
