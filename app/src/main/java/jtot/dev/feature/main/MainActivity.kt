@@ -1,12 +1,12 @@
 package jtot.dev.feature.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import jtot.dev.R
+import jtot.dev.base.BaseActivity
+import jtot.dev.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 }
