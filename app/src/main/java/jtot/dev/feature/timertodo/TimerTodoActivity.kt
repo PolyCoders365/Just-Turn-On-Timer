@@ -10,5 +10,9 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
 ) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.btn.setOnClickListener {
+            binding.timer.setTime(binding.et.text.toString().toInt())
+        }
     }
 }
