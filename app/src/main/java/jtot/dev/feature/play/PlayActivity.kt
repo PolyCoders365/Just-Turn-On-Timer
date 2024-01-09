@@ -39,10 +39,13 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
             addItemDecoration(ContentDecoration(dpToPixel(16f).toInt()))
         }
 
-        binding.btnEdit.setOnClickListener {
+        binding.btnStart.setOnClickListener {
             Intent(this, TimerTodoActivity::class.java).apply {
                 putExtra("schedule", schedule)
             }.run(::startActivity)
+        }
+        binding.btnEdit.setOnClickListener {
+            // TODO: Schedule 작성 view로 이동
         }
     }
 }
