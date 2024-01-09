@@ -1,8 +1,9 @@
 package jtot.dev
 
+import jtot.dev.model.Schedule
+import jtot.dev.model.Todo
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -10,8 +11,44 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-	@Test
-	fun addition_isCorrect() {
-		assertEquals(4, 2 + 2)
-	}
+    @Test
+    fun scheduleTest() {
+        val schedule = Schedule().createDummy()
+        val todoList = getTodoList(schedule)
+        val todo = todoList.first()
+        val minute = getFiltMinute(startTime = todo.startTime, endTime = todo.endTime)
+        assertEquals(60, minute)
+    }
+
+    @Test
+    fun timeFilter() {
+        val startTime = "10:00"
+        val endTime = "11:30"
+
+        assertEquals(90, getFiltMinute(startTime, endTime))
+    }
+
+    fun getFiltMinute(
+        startTime: String,
+        endTime: String,
+    ): Int {
+        val startHour = startTime.split(":")[0].toInt()
+        val startMinute = startTime.split(":")[1].toInt()
+        val startTotalMinute = startHour * 60 + startMinute
+
+        val endHour = endTime.split(":")[0].toInt()
+        val endMinute = endTime.split(":")[1].toInt()
+        val endTotalMinute = endHour * 60 + endMinute
+        return endTotalMinute - startTotalMinute
+    }
+
+    private fun getTodoList(schedule: Schedule): MutableList<Todo> {
+        val todoList = mutableListOf<Todo>()
+        schedule.todos.forEach { content ->
+            if (content is Todo) {
+                todoList.add(content)
+            }
+        }
+        return todoList
+    }
 }
