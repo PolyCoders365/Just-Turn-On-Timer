@@ -1,10 +1,12 @@
 package jtot.dev.feature.play
 
+import android.content.Intent
 import android.os.Bundle
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityPlayBinding
 import jtot.dev.feature.play.decoration.ContentDecoration
+import jtot.dev.feature.timertodo.TimerTodoActivity
 import jtot.dev.model.Schedule
 import jtot.dev.model.Todo
 import jtot.dev.utils.createStringDummy
@@ -35,6 +37,12 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
         binding.rvContent.run {
             adapter = contentAdapter
             addItemDecoration(ContentDecoration(dpToPixel(16f).toInt()))
+        }
+
+        binding.btnEdit.setOnClickListener {
+            Intent(this, TimerTodoActivity::class.java).apply {
+                putExtra("schedule", schedule)
+            }.run(::startActivity)
         }
     }
 }
