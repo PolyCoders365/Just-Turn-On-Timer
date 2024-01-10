@@ -23,11 +23,10 @@ class MainViewModel : BaseViewModel() {
         myRef.addValueEventListener(
             object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val oldFolder = dataSnapshot.getValue(Folder::class.java)
-                    val docs = oldFolder?.docs?.map { it as Any } ?: listOf()
-                    oldFolder?.let {
-                        val updatedFolder = it.copy(docs = docs)
-                        folderLiveData.value = updatedFolder
+                    val folderData = dataSnapshot.getValue(Folder::class.java)
+                    val docs = folderData?.docs?.map { it as Any } ?: listOf()
+                    folderData?.let {
+                        folderLiveData.value = it.copy(docs = docs)
                     }
                 }
 
