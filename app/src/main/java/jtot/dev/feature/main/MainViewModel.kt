@@ -25,8 +25,10 @@ class MainViewModel : BaseViewModel() {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val oldFolder = dataSnapshot.getValue(Folder::class.java)
                     val docs = oldFolder?.docs?.map { it as Any } ?: listOf()
-                    val newFolder = Folder(oldFolder?.title ?: "", docs)
-                    folderLiveData.value = newFolder
+                    oldFolder?.let {
+                        val updatedFolder = it.copy(docs = docs)
+                        folderLiveData.value = updatedFolder
+                    }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {

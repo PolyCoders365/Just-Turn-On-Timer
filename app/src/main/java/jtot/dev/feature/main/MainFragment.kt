@@ -24,8 +24,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
             if (folder != null) {
                 binding.clContainer.visibility = View.GONE
                 binding.rvTodos.visibility = View.VISIBLE
-                val folders = listOf(folder)
-                todosAdapter.setTodosList(folders)
+                todosAdapter.setTodosList(listOf(folder))
             } else {
                 binding.clContainer.visibility = View.VISIBLE
                 binding.rvTodos.visibility = View.GONE
