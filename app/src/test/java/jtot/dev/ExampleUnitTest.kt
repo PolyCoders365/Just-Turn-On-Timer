@@ -16,7 +16,7 @@ class ExampleUnitTest {
         val schedule = Schedule().createDummy()
         val todoList = getTodoList(schedule)
         val todo = todoList.first()
-        val minute = getFiltMinute(startTime = todo.startTime, endTime = todo.endTime)
+        val minute = getTimeLength(startTime = todo.startTime, endTime = todo.endTime)
         assertEquals(60, minute)
     }
 
@@ -25,30 +25,32 @@ class ExampleUnitTest {
         val startTime = "10:00"
         val endTime = "11:30"
 
-        assertEquals(90, getFiltMinute(startTime, endTime))
+        assertEquals(90, getTimeLength(startTime, endTime))
     }
 
-    fun getFiltMinute(
+    fun getTimeLength(
         startTime: String,
         endTime: String,
     ): Int {
         val startHour = startTime.split(":")[0].toInt()
         val startMinute = startTime.split(":")[1].toInt()
-        val startTotalMinute = startHour * 60 + startMinute
 
         val endHour = endTime.split(":")[0].toInt()
         val endMinute = endTime.split(":")[1].toInt()
+
+        val startTotalMinute = startHour * 60 + startMinute
         val endTotalMinute = endHour * 60 + endMinute
+
         return endTotalMinute - startTotalMinute
     }
 
     private fun getTodoList(schedule: Schedule): MutableList<Todo> {
-        val todoList = mutableListOf<Todo>()
-        schedule.todos.forEach { content ->
-            if (content is Todo) {
-                todoList.add(content)
+        return mutableListOf<Todo>().apply {
+            schedule.todos.forEach { content ->
+                if (content is Todo) {
+                    add(content)
+                }
             }
         }
-        return todoList
     }
 }

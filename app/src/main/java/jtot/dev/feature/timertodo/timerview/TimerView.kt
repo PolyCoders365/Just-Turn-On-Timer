@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Typeface
-import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -35,65 +34,57 @@ class TimerView
         defStyleAttr: Int = 0,
     ) : View(context, attrs, defStyleAttr) {
         private val leftPaint =
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.FILL_AND_STROKE
+            getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.red)
             }
+
         private val circlePaint =
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.FILL_AND_STROKE
+            getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.tertiary95)
             }
+
         private val centerCirclePaint =
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.FILL_AND_STROKE
+            getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.white)
                 strokeWidth = 10F
             }
+
         private val textPaint =
-            TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+            getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.black)
                 textSize = context.dpToPixel(20F)
                 typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 textAlign = Paint.Align.CENTER
             }
         private val linePaint =
-            Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                style = Paint.Style.FILL_AND_STROKE
+            getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.black)
                 strokeWidth = 3F
             }
 
         private val circleMargin = context.dpToPixel(48F)
+        private val textMargin = context.dpToPixel(16f)
+        private val centerCircleMargin = context.dpToPixel(8f)
 
         private var endTime = 0
         private var isDrawMinutesText = false
         private val angleList =
-            listOf(
-                Pair(0, 0),
-                Pair(30, 5),
-                Pair(60, 10),
-                Pair(90, 15),
-                Pair(120, 20),
-                Pair(150, 25),
-                Pair(180, 30),
-                Pair(210, 35),
-                Pair(240, 40),
-                Pair(270, 45),
-                Pair(300, 50),
-                Pair(330, 55),
-            )
-        private val centerCircle: RectF by lazy {
+            mutableListOf<Pair<Int, Int>>().apply {
+                repeat(12) { num ->
+                    this.add(Pair(30 * num, 5 * num))
+                }
+            }.toList()
+        private val centerCircle =
             RectF().apply {
                 set(
-                    width.toFloat() / 2 - context.dpToPixel(8f),
-                    width.toFloat() / 2 - context.dpToPixel(8f),
-                    width.toFloat() / 2 + context.dpToPixel(8f),
-                    width.toFloat() / 2 + context.dpToPixel(8f),
+                    width.toFloat() / 2 - centerCircleMargin,
+                    width.toFloat() / 2 - centerCircleMargin,
+                    width.toFloat() / 2 + centerCircleMargin,
+                    width.toFloat() / 2 + centerCircleMargin,
                 )
             }
-        }
-        private val circle: RectF by lazy {
+
+        private val circle =
             RectF().apply {
                 set(
                     circleMargin,
@@ -102,7 +93,6 @@ class TimerView
                     width.toFloat() - circleMargin,
                 )
             }
-        }
 
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
@@ -139,15 +129,15 @@ class TimerView
                     linePaint,
                 )
 
-                // Text background 그림
+                // Text background
                 drawRect(
-                    point.first - context.dpToPixel(16f),
-                    point.second - context.dpToPixel(16f),
-                    point.first + context.dpToPixel(16f),
-                    point.second + context.dpToPixel(16f),
+                    point.first - textMargin,
+                    point.second - textMargin,
+                    point.first + textMargin,
+                    point.second + textMargin,
                     Paint().apply { color = Color.WHITE },
                 )
-                // 분 Text 그림
+                // 분 Text
                 drawText(
                     pair.second.toString(),
                     point.first,
@@ -156,10 +146,10 @@ class TimerView
                 )
             }
 
-            // 배경 원 그림
+            // 배경 원
             drawArc(circleRectF, 270f, 360f, true, circlePaint)
 
-            // 가운데 작은 원 그림
+            // 가운데 작은 원
             drawArc(centerRectF, 270f, 360f, true, centerCirclePaint)
         }
 
@@ -177,15 +167,21 @@ class TimerView
             centerXPoint: Float,
             centerYPoint: Float,
         ): Pair<Float, Float> {
-            val vectorAX = centerXPoint - startXPoint
-            val vectorAY = centerYPoint - startYPoint
+            val vectorX = centerXPoint - startXPoint
+            val vectorY = centerYPoint - startYPoint
 
-            val aX = vectorAX * cos(angle) - vectorAY * sin(angle)
-            val aY = vectorAX * sin(angle) - vectorAY * cos(angle)
-            val cX =
-                centerXPoint + aX
-            val cY =
-                centerYPoint + aY
-            return Pair(cX, cY)
+            val pointVectorX = vectorX * cos(angle) - vectorY * sin(angle)
+            val pointVectorY = vectorX * sin(angle) - vectorY * cos(angle)
+            val pointX =
+                centerXPoint + pointVectorX
+            val pointY =
+                centerYPoint + pointVectorY
+            return Pair(pointX, pointY)
+        }
+
+        private fun getDefaultPaint(): Paint {
+            return Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                style = Paint.Style.FILL_AND_STROKE
+            }
         }
     }

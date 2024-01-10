@@ -7,8 +7,10 @@ import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityTimerTodoBinding
 import jtot.dev.model.Schedule
-import jtot.dev.model.Todo
-import jtot.dev.utils.getFiltMinute
+import jtot.dev.utils.ONE_SECOND
+import jtot.dev.utils.getTimeLength
+import jtot.dev.utils.getTodoList
+import jtot.dev.utils.intentSerializable
 import java.util.Timer
 import kotlin.concurrent.timer
 
@@ -21,36 +23,30 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.setSchedule(
-            intent.getSerializableExtra("schedule") as Schedule,
-        )
+        intent.intentSerializable("schedule", Schedule::class.java)?.let {
+            viewModel.setSchedule(
+                it,
+            )
+        }
         val todo = getTodoList(viewModel.getSchedule()).first()
-        var minute = getFiltMinute(startTime = todo.startTime, endTime = todo.endTime)
-        var period = minute * 60
-        binding.timer.setTime(minute)
+        val timeMinute = getTimeLength(startTime = todo.startTime, endTime = todo.endTime)
+        var totalSecond = timeMinute * 60
+
+        binding.timer.setTime(timeMinute)
+
         binding.iconButton.setOnClickListener {
             if (!binding.iconButton.isSelected) {
                 binding.iconButton.isSelected = !binding.iconButton.isSelected
                 timer =
-                    timer(period = 1000) {
-                        period--
-                        Log.e("period", "min: ${period / 60}, sec: ${period - (period / 60) * 60}")
-                        binding.timer.setTime(period / 60)
+                    timer(period = ONE_SECOND) {
+                        totalSecond--
+                        Log.e("current remain time", "min: ${totalSecond / 60}, sec: ${totalSecond - (totalSecond / 60) * 60}")
+                        binding.timer.setTime(totalSecond / 60)
                     }
             } else {
                 binding.iconButton.isSelected = !binding.iconButton.isSelected
                 timer.cancel()
             }
         }
-    }
-
-    private fun getTodoList(schedule: Schedule): MutableList<Todo> {
-        val todoList = mutableListOf<Todo>()
-        schedule.todos.forEach { content ->
-            if (content is Todo) {
-                todoList.add(content)
-            }
-        }
-        return todoList
     }
 }
