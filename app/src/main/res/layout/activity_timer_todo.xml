@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="title"
+            type="String" />
+        <variable
+            name="time"
             type="String" />
     </data>
 
@@ -26,6 +30,30 @@
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/text.headline_medium"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:text="@{title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timer"
+                tools:text="title" />
+
+            <TextView
+                android:layout_marginTop="16dp"
+                style="@style/text.title_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:text="@{time}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                tools:text="time" />
             <Button
                 android:id="@+id/btn_play"
                 style="?attr/materialIconButtonFilledStyle"
@@ -33,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:icon="@drawable/button_timer_play"
-                app:iconSize="48dp"
+                app:iconSize="64dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,16 +69,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
-
             android:id="@+id/bottomsheet"
-            android:background="@color/secondary_container"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            app:behavior_peekHeight="100dp"
             style="@style/Widget.Material3.BottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="@color/surface_container_low"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="50dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"> <!-- Drag handle for accessibility -->
                 <com.google.android.material.bottomsheet.BottomSheetDragHandleView
@@ -64,17 +93,29 @@
                     style="@style/text.title_large"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="24dp"
+                    android:layout_marginHorizontal="24dp"
                     android:text="@{title}"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/drag_handle"
                     tools:text="title" />
 
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/text.title_large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@{time}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:text="time" />
+
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/rv_bottom_sheet"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="24dp"
@@ -82,7 +123,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
                     tools:listitem="@layout/item_content_todo" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>

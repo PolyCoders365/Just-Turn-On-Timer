@@ -7,8 +7,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityTimerTodoBinding
+import jtot.dev.feature.play.ContentAdapter
+import jtot.dev.feature.play.decoration.ContentDecoration
 import jtot.dev.model.Schedule
 import jtot.dev.utils.ONE_SECOND
+import jtot.dev.utils.dpToPixel
 import jtot.dev.utils.getTimeLength
 import jtot.dev.utils.getTodoList
 import jtot.dev.utils.intentSerializable
@@ -20,6 +23,9 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
 ) {
     private val viewModel: TimerViewModel by viewModels()
     private var timer = Timer()
+    private val contentAdapter: ContentAdapter by lazy {
+        ContentAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,7 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
             viewModel.setSchedule(
                 it,
             )
+            contentAdapter.setContentList(it.todos)
         }
         val todo = getTodoList(viewModel.getSchedule()).first()
         val timeMinute = getTimeLength(startTime = todo.startTime, endTime = todo.endTime)
@@ -35,7 +42,13 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
 
         binding.timer.setTime(timeMinute)
         binding.title = todo.title
+        binding.time = "${todo.startTime} ~ ${todo.endTime} (${timeMinute}분)"
+
         BottomSheetBehavior.from(binding.bottomsheet)
+        binding.rvBottomSheet.run {
+            adapter = contentAdapter
+            addItemDecoration(ContentDecoration(dpToPixel(16f).toInt()))
+        }
         binding.btnPlay.setOnClickListener {
             if (!binding.btnPlay.isSelected) {
                 binding.btnPlay.isSelected = !binding.btnPlay.isSelected
