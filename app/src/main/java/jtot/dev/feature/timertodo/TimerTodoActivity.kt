@@ -3,6 +3,7 @@ package jtot.dev.feature.timertodo
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityTimerTodoBinding
@@ -33,10 +34,11 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
         var totalSecond = timeMinute * 60
 
         binding.timer.setTime(timeMinute)
-
-        binding.iconButton.setOnClickListener {
-            if (!binding.iconButton.isSelected) {
-                binding.iconButton.isSelected = !binding.iconButton.isSelected
+        binding.title = todo.title
+        BottomSheetBehavior.from(binding.bottomsheet)
+        binding.btnPlay.setOnClickListener {
+            if (!binding.btnPlay.isSelected) {
+                binding.btnPlay.isSelected = !binding.btnPlay.isSelected
                 timer =
                     timer(period = ONE_SECOND) {
                         totalSecond--
@@ -44,7 +46,7 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
                         binding.timer.setTime(totalSecond / 60)
                     }
             } else {
-                binding.iconButton.isSelected = !binding.iconButton.isSelected
+                binding.btnPlay.isSelected = !binding.btnPlay.isSelected
                 timer.cancel()
             }
         }

@@ -74,7 +74,7 @@ class TimerView
                     this.add(Pair(30 * num, 5 * num))
                 }
             }.toList()
-        private val centerCircle =
+        private val centerCircle: RectF by lazy {
             RectF().apply {
                 set(
                     width.toFloat() / 2 - centerCircleMargin,
@@ -83,8 +83,9 @@ class TimerView
                     width.toFloat() / 2 + centerCircleMargin,
                 )
             }
+        }
 
-        private val circle =
+        private val circle: RectF by lazy {
             RectF().apply {
                 set(
                     circleMargin,
@@ -93,6 +94,7 @@ class TimerView
                     width.toFloat() - circleMargin,
                 )
             }
+        }
 
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
