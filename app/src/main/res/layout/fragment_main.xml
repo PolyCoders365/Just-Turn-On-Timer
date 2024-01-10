@@ -38,11 +38,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="15dp"
-            android:padding="30dp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/tv_todo"
             app:layout_constraintTop_toBottomOf="@id/tv_todo"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:visibility="visible"
             tools:listitem="@layout/item_content_folder"/>
 

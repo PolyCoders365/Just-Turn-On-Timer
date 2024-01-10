@@ -1,13 +1,8 @@
 package jtot.dev.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity
 data class Folder(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val docs: List<Document>,
+    val title: String = "",
+    val docs: List<Any> = listOf(),
 ) {
     fun createDummy() =
         this.copy(
