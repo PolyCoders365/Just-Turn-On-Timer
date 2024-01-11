@@ -1,5 +1,6 @@
 package jtot.dev.feature.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -11,11 +12,13 @@ import jtot.dev.model.Folder
 class MainViewModel : BaseViewModel() {
     private val database = FirebaseDatabase.getInstance()
     private val myRef = database.getReference("folders")
-    val folderLiveData = MutableLiveData<Folder>()
-    val errorMessage = MutableLiveData<String>()
 
-    fun writeFolder() {
-        val folder = Folder("work", listOf()).createDummy()
+    private val _folderLiveData = MutableLiveData<Folder>()
+    val folderLiveData: LiveData<Folder> get() = _folderLiveData
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
+
+    fun writeFolder(folder: Folder) {
         myRef.setValue(folder)
     }
 
@@ -26,13 +29,13 @@ class MainViewModel : BaseViewModel() {
                     val folderData = dataSnapshot.getValue(Folder::class.java)
                     val docs = folderData?.docs?.map { it as Any } ?: listOf()
                     folderData?.let {
-                        folderLiveData.value = it.copy(docs = docs)
+                        _folderLiveData.value = it.copy(docs = docs)
                     }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
                     // Log a message
-                    errorMessage.value = databaseError.message
+                    _errorMessage.value = databaseError.message
                 }
             },
         )

@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import jtot.dev.R
 import jtot.dev.base.BaseFragment
 import jtot.dev.databinding.FragmentMainBinding
+import jtot.dev.model.Folder
 import jtot.dev.utils.showSnackBar
 
 class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
@@ -21,20 +22,20 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         binding.rvTodos.adapter = todosAdapter
 
         mainViewModel.folderLiveData.observe(viewLifecycleOwner) { folder ->
-            if (folder != null) {
-                binding.clContainer.visibility = View.GONE
-                binding.rvTodos.visibility = View.VISIBLE
-                todosAdapter.setTodosList(listOf(folder))
-            } else {
-                binding.clContainer.visibility = View.VISIBLE
-                binding.rvTodos.visibility = View.GONE
-            }
+            binding.clContainer.visibility = if (folder == null) View.VISIBLE else View.GONE
+            binding.rvTodos.visibility = if (folder == null) View.GONE else View.VISIBLE
+            folder?.let { todosAdapter.setTodosList(listOf(it)) }
         }
+
         mainViewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             showSnackBar(view, requireActivity(), message)
         }
 
-        mainViewModel.writeFolder()
+        createDummyData()
         mainViewModel.readFolder()
+    }
+
+    private fun createDummyData() {
+        mainViewModel.writeFolder(Folder("work", listOf()).createDummy())
     }
 }
