@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_main_today"
+        android:icon="@drawable/ic_today_24"
+        android:title="today"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_main_model_edit"
+        android:icon="@drawable/ic_model_edit_24"
+        android:title="modelEdit"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_main_access_time"
+        android:icon="@drawable/ic_access_time_24"
+        android:title="accessTime"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_main_settings"
+        android:icon="@drawable/ic_settings_24"
+        android:title="settings"
+        app:showAsAction="always"/>
+
+
+
+</menu>
