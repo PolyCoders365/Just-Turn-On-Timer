@@ -48,6 +48,7 @@ class ContentAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
         fun bind(todo: Todo) {
             binding.todo = todo
+            binding.time = "${todo.startTime} ~ ${todo.endTime}, ${todo.breakTime}분"
 
             OnClickListener {
                 ToggleAnimation.toggleArrow(view = binding.btnMore, isExpanded = isExpand)
@@ -56,12 +57,12 @@ class ContentAdapter() : RecyclerView.Adapter<ViewHolder>() {
                     binding.layoutBlock.background =
                         ContextCompat.getDrawable(
                             binding.root.context,
-                            R.drawable.background_todo_expand,
+                            R.drawable.background_todo_top_expand,
                         )
                 } else {
                     ToggleAnimation.collapse(binding.layoutExpand)
                     binding.layoutBlock.background =
-                        ContextCompat.getDrawable(binding.root.context, R.drawable.background_todo)
+                        ContextCompat.getDrawable(binding.root.context, R.drawable.background_todo_top)
                 }
 
                 isExpand = !isExpand
