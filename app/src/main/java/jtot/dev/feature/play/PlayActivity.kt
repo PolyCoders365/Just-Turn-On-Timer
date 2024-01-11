@@ -8,8 +8,6 @@ import jtot.dev.databinding.ActivityPlayBinding
 import jtot.dev.feature.play.decoration.ContentDecoration
 import jtot.dev.feature.timertodo.TimerTodoActivity
 import jtot.dev.model.Schedule
-import jtot.dev.model.Todo
-import jtot.dev.utils.createStringDummy
 import jtot.dev.utils.dpToPixel
 
 class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
@@ -18,15 +16,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
     private val contentAdapter: ContentAdapter by lazy {
         ContentAdapter().apply {
             setContentList(
-                listOf(
-                    createStringDummy(),
-                    Todo().createDummy(),
-                    Todo().createStarDummy(),
-                    createStringDummy(),
-                    Todo().createStarDummy(),
-                    createStringDummy(),
-                    createStringDummy(),
-                ),
+                schedule.todos,
             )
         }
     }
@@ -39,10 +29,13 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
             addItemDecoration(ContentDecoration(dpToPixel(16f).toInt()))
         }
 
-        binding.btnEdit.setOnClickListener {
+        binding.btnStart.setOnClickListener {
             Intent(this, TimerTodoActivity::class.java).apply {
                 putExtra("schedule", schedule)
             }.run(::startActivity)
+        }
+        binding.btnEdit.setOnClickListener {
+            // TODO: Schedule 작성 view로 이동
         }
     }
 }

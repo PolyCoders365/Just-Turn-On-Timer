@@ -11,7 +11,7 @@ data class Schedule(
         return this.copy(
             title = "2024-01-01",
             content = createStringDummy(),
-            todos = listOf(Todo().createDummy()),
+            todos = listOf(createStringDummy(), Todo().createDummy(), Todo().createStarDummy()),
         )
     }
 }
