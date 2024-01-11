@@ -8,6 +8,7 @@
     <color name="tertiary">#7D5260</color>
     <color name="tertiary99">#FFFBFA</color>
     <color name="tertiary95">#FFECF1</color>
+    <color name="tertiary90">#FFD8E4</color>
     <color name="tertiary80">#EFB8C8</color>
 
     <color name="tertiary_container">#FFD8E4</color>
@@ -16,4 +17,5 @@
     <color name="secondary_container">#E8DEF8</color>
     <color name="surface_container">#f3edf7</color>
     <color name="folder_item_background">#D9D9D9</color>
+    <color name="surface_container_low">#f7f2fa</color>
 </resources>
