@@ -27,35 +27,43 @@
             style="@style/text.title_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="41dp"
-            android:paddingStart="30dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="24dp"
             android:text="TODO"
-            app:layout_constraintStart_toStartOf="@id/mcv_calendar"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mcv_calendar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_todos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
             android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_todo"
             app:layout_constraintTop_toBottomOf="@id/tv_todo"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:visibility="visible"
-            tools:listitem="@layout/item_content_folder"/>
+            tools:listitem="@layout/item_content_folder"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
             android:id="@+id/cl_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="15dp"
             android:background="@drawable/background_rounded_0_white"
-            android:paddingVertical="60dp"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_todo"
-            app:layout_constraintTop_toBottomOf="@id/tv_todo">
+            app:layout_constraintTop_toBottomOf="@id/tv_todo"
+            tools:visibility="invisible">
 
             <TextView
                 android:id="@+id/tv_empty_info"
@@ -73,13 +81,13 @@
                 style="@style/text.title_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="할 일 추가"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_rounded_0_primary"
                 android:drawableLeft="@drawable/ic_add_18"
                 android:drawablePadding="8dp"
                 android:paddingHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:text="할 일 추가"
                 android:textColor="@color/white"
-                android:background="@drawable/background_rounded_0_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/tv_empty_info"
                 app:layout_constraintStart_toStartOf="@id/tv_empty_info"

@@ -36,6 +36,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
     }
 
     private fun createDummyData() {
-        mainViewModel.writeFolder(Folder("work", listOf()).createDummy())
+        mainViewModel.writeFolder(Folder().createDummy())
     }
 }

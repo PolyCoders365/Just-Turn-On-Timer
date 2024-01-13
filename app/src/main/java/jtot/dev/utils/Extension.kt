@@ -3,6 +3,8 @@ package jtot.dev.utils
 import android.content.Intent
 import android.os.Build
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
 
 /**
  *
@@ -20,3 +22,5 @@ fun <T : Serializable> Intent.intentSerializable(
         this.getSerializableExtra(key) as T?
     }
 }
+
+fun Date.convertToFormat(): String = SimpleDateFormat("yyyy-MM-dd").format(this)
