@@ -25,18 +25,16 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_todo_top">
 
-
-
             <Button
+                android:id="@+id/button3"
+                style="@style/IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:id="@+id/btn_star"
+                app:icon="@drawable/ic_folder_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/IconButton"
-                app:icon="@drawable/ic_star_24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -50,16 +48,17 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_more"
-                app:layout_constraintStart_toEndOf="@+id/btn_star"
+                app:layout_constraintStart_toEndOf="@+id/button3"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Work" />
 
-            <ImageButton
+            <Button
+                app:iconSize="24dp"
+                style="@style/IconButton"
                 android:id="@+id/btn_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_expand_more_24"
+                app:icon="@drawable/ic_expand_more_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -76,23 +75,8 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <TextView
-                android:text="@{`Time: `+ time}"
-                style="@style/text.body_medium"
-                tools:text="Time: 00:00 ~ 00:00, break time 30min"
-                android:id="@+id/tv_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@{`Tag: ` + todo.tag}"
-                android:layout_marginTop="4dp"
-                style="@style/text.body_medium"
-                tools:text="Tag: work"
-                android:id="@+id/tv_tag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="16dp"
                 android:id="@+id/rv_nest_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

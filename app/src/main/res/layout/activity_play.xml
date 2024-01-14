@@ -36,12 +36,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="2024-01-01" />
 
-            <ImageButton
+            <Button
+                style="@style/IconButton"
                 android:id="@+id/btn_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/ic_edit_todo_36"
+                android:layout_marginEnd="16dp"
+                app:icon="@drawable/ic_edit_todo_36"
+                app:iconSize="36dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
