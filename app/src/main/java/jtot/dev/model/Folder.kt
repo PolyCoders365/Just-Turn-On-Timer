@@ -17,4 +17,20 @@ data class Folder(
                     Schedule().createDummy(),
                 ),
         )
+
+    fun createDummyFolders() =
+        this.copy(
+            title = getToday(),
+            docs =
+                listOf(
+                    Folder().copy(title = "work", docs = listOf(Folder().createDummy())),
+                    Folder().copy(
+                        title = "new",
+                        docs =
+                            listOf(
+                                Todo().createDummy(),
+                            ),
+                    ),
+                ),
+        )
 }

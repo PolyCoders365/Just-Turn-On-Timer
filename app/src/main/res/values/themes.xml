@@ -54,4 +54,18 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/on_surface_variant</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:inset">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="SideSheet" parent="Widget.Material3.SideSheet.Modal">
+        <item name="android:layout_width">match_parent</item>
+    </style>
 </resources>
