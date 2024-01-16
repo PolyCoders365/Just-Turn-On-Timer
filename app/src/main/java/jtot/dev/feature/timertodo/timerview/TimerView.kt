@@ -40,7 +40,7 @@ class TimerView
 
         private val circlePaint =
             getDefaultPaint().apply {
-                color = ContextCompat.getColor(context, R.color.tertiary95)
+                color = ContextCompat.getColor(context, R.color.tertiary90)
             }
 
         private val centerCirclePaint =
@@ -56,24 +56,40 @@ class TimerView
                 typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
                 textAlign = Paint.Align.CENTER
             }
-        private val linePaint =
+        private val fiveMinLinePaint =
             getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.black)
                 strokeWidth = 3F
             }
+        private val minLinePaint =
+            getDefaultPaint().apply {
+                color = ContextCompat.getColor(context, R.color.black)
+                strokeWidth = 1F
+            }
+
+        private val currentLinePaint =
+            Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                isAntiAlias = true
+                strokeJoin = Paint.Join.BEVEL
+                style = Paint.Style.STROKE
+                color = ContextCompat.getColor(context, R.color.white)
+                strokeWidth = 20F
+            }
 
         private val circleMargin = context.dpToPixel(48F)
-        private val textMargin = context.dpToPixel(16f)
+        private val fiveMinTextMargin = context.dpToPixel(12f)
+
         private val centerCircleMargin = context.dpToPixel(8f)
 
         private var endTime = 0
         private var isDrawMinutesText = false
-        private val angleList =
+
+        private val minAngleList =
             mutableListOf<Pair<Int, Int>>().apply {
-                repeat(12) { num ->
-                    this.add(Pair(30 * num, 5 * num))
+                repeat(60) { num ->
+                    this.add(Pair(6 * num, num))
                 }
-            }.toList()
+            }
         private val centerCircle: RectF by lazy {
             RectF().apply {
                 set(
@@ -100,21 +116,38 @@ class TimerView
             super.onDraw(canvas)
             canvas.run {
                 if (!isDrawMinutesText) {
-                    drawInitBackground(circleRectF = circle, centerRectF = centerCircle)
+                    drawInitBackground(circleRectF = circle)
                 }
 
                 // 설정된 endTime으로 빨간색 호를 그림
                 drawArc(circle, 270f, -(endTime * 6).toFloat(), true, leftPaint)
+                val currentAngle = getAngle(endTime * 6)
+                val currentPoint =
+                    getPoint(
+                        currentAngle,
+                        (width.toFloat() / 2),
+                        (width.toFloat() / 2) - context.dpToPixel(32f),
+                        width.toFloat() / 2,
+                        width.toFloat() / 2,
+                    )
+                // 현재 분침
+                drawLine(
+                    currentPoint.first,
+                    currentPoint.second,
+                    width.toFloat() / 2,
+                    width.toFloat() / 2,
+                    currentLinePaint,
+                )
+                // 가운데 작은 원
+                drawArc(centerCircle, 270f, 360f, true, centerCirclePaint)
             }
         }
 
-        private fun Canvas.drawInitBackground(
-            circleRectF: RectF,
-            centerRectF: RectF,
-        ) {
-            angleList.forEach { pair ->
+        private fun Canvas.drawInitBackground(circleRectF: RectF) {
+            // 분 선
+            minAngleList.forEach { pair ->
                 val angle = getAngle(pair.first)
-                val point =
+                val fiveMinPoint =
                     getPoint(
                         angle,
                         width.toFloat() / 2,
@@ -122,37 +155,68 @@ class TimerView
                         width.toFloat() / 2,
                         width.toFloat() / 2,
                     )
-                // 5분 단위 선 그림
-                drawLine(
-                    point.first,
-                    point.second,
-                    width.toFloat() / 2,
-                    width.toFloat() / 2,
-                    linePaint,
-                )
+                val minPoint =
+                    getPoint(
+                        angle,
+                        (width.toFloat() / 2),
+                        context.dpToPixel(36f),
+                        width.toFloat() / 2,
+                        width.toFloat() / 2,
+                    )
 
+                if (pair.second % 5 == 0) {
+                    // 5분 단위 선 그림
+                    drawLine(
+                        fiveMinPoint.first,
+                        fiveMinPoint.second,
+                        width.toFloat() / 2,
+                        width.toFloat() / 2,
+                        fiveMinLinePaint,
+                    )
+                } else {
+                    // 1분 단위 선 그림
+                    drawLine(
+                        minPoint.first,
+                        minPoint.second,
+                        width.toFloat() / 2,
+                        width.toFloat() / 2,
+                        minLinePaint,
+                    )
+                }
                 // Text background
                 drawRect(
-                    point.first - textMargin,
-                    point.second - textMargin,
-                    point.first + textMargin,
-                    point.second + textMargin,
+                    fiveMinPoint.first - fiveMinTextMargin,
+                    fiveMinPoint.second - fiveMinTextMargin,
+                    fiveMinPoint.first + fiveMinTextMargin,
+                    fiveMinPoint.second + fiveMinTextMargin,
                     Paint().apply { color = Color.WHITE },
                 )
-                // 분 Text
-                drawText(
-                    pair.second.toString(),
-                    point.first,
-                    point.second + context.dpToPixel(8f),
-                    textPaint,
-                )
+            }
+
+            // text
+            minAngleList.forEach { pair ->
+                val angle = getAngle(pair.first)
+                val fiveMinPoint =
+
+                    getPoint(
+                        angle,
+                        width.toFloat() / 2,
+                        context.dpToPixel(16f),
+                        width.toFloat() / 2,
+                        width.toFloat() / 2,
+                    )
+                if (pair.second % 5 == 0) {
+                    drawText(
+                        pair.second.toString(),
+                        fiveMinPoint.first,
+                        fiveMinPoint.second + context.dpToPixel(8f),
+                        textPaint,
+                    )
+                }
             }
 
             // 배경 원
             drawArc(circleRectF, 270f, 360f, true, circlePaint)
-
-            // 가운데 작은 원
-            drawArc(centerRectF, 270f, 360f, true, centerCirclePaint)
         }
 
         fun setTime(minute: Int) {
