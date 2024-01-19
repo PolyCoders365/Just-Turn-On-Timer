@@ -120,8 +120,8 @@ class TimerView
                 }
 
                 // 설정된 endTime으로 빨간색 호를 그림
-                drawArc(circle, 270f, -(endTime * 6).toFloat(), true, leftPaint)
-                val currentAngle = getAngle(endTime * 6)
+                drawArc(circle, 270f, -(endTime * 0.1).toFloat(), true, leftPaint)
+                val currentAngle = getAngle(endTime * 0.1)
                 val currentPoint =
                     getPoint(
                         currentAngle,
@@ -146,7 +146,7 @@ class TimerView
         private fun Canvas.drawInitBackground(circleRectF: RectF) {
             // 분 선
             minAngleList.forEach { pair ->
-                val angle = getAngle(pair.first)
+                val angle = getAngle(pair.first.toDouble())
                 val fiveMinPoint =
                     getPoint(
                         angle,
@@ -195,7 +195,7 @@ class TimerView
 
             // text
             minAngleList.forEach { pair ->
-                val angle = getAngle(pair.first)
+                val angle = getAngle(pair.first.toDouble())
                 val fiveMinPoint =
 
                     getPoint(
@@ -219,12 +219,12 @@ class TimerView
             drawArc(circleRectF, 270f, 360f, true, circlePaint)
         }
 
-        fun setTime(minute: Int) {
-            endTime = minute
+        fun setTime(totalSecond: Int) {
+            endTime = totalSecond
             invalidate()
         }
 
-        private fun getAngle(angle: Int) = (angle * Math.PI / 180).toFloat()
+        private fun getAngle(angle: Double) = (angle * Math.PI / 180).toFloat()
 
         private fun getPoint(
             angle: Float,

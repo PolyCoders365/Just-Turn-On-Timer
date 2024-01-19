@@ -36,11 +36,17 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
             )
             contentAdapter.setContentList(it.todos)
         }
+
+        val asset = resources.assets.open("jtot-adminsdk.json")
+        viewModel.getAccessToken(asset, isSuccess = { accessToken ->
+            viewModel.setAccessToken(accessToken)
+        })
+
         val todo = getTodoList(viewModel.getSchedule()).first()
         val timeMinute = getTimeLength(startTime = todo.startTime, endTime = todo.endTime)
         var totalSecond = timeMinute * 60
 
-        binding.timer.setTime(timeMinute)
+        binding.timer.setTime(totalSecond)
         binding.title = todo.title
         binding.time = "${todo.startTime} ~ ${todo.endTime} (${timeMinute}분)"
 
@@ -52,11 +58,23 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
         binding.btnPlay.setOnClickListener {
             if (!binding.btnPlay.isSelected) {
                 binding.btnPlay.isSelected = !binding.btnPlay.isSelected
+                totalSecond = 10
                 timer =
                     timer(period = ONE_SECOND) {
                         totalSecond--
                         Log.e("current remain time", "min: ${totalSecond / 60}, sec: ${totalSecond - (totalSecond / 60) * 60}")
-                        binding.timer.setTime(totalSecond / 60)
+                        binding.timer.setTime(totalSecond)
+                        if (totalSecond <= 0) {
+                            viewModel.createFCMToken { deviceToken ->
+                                viewModel.sendNotifications(
+                                    accessToken = viewModel.getAccessToken(),
+                                    receiveDeviceToken = deviceToken,
+                                    title = "${todo.title} 완료",
+                                    content = binding.time.toString(),
+                                )
+                            }
+                            timer.cancel()
+                        }
                     }
             } else {
                 binding.btnPlay.isSelected = !binding.btnPlay.isSelected
