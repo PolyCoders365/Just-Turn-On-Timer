@@ -21,8 +21,8 @@ data class Todo(
             tag = "work",
             date = "2024-01-01",
             startTime = "12:00",
-            endTime = "13:00",
-            breakTime = "30",
+            endTime = "14:00",
+            breakTime = "90",
             todos = listOf(),
         )
 

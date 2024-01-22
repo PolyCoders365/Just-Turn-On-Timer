@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import jtot.dev.R
@@ -33,7 +34,7 @@ class TimerView
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0,
     ) : View(context, attrs, defStyleAttr) {
-        private val leftPaint =
+        private val currentMinPaint =
             getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.red)
             }
@@ -120,7 +121,7 @@ class TimerView
                 }
 
                 // 설정된 endTime으로 빨간색 호를 그림
-                drawArc(circle, 270f, -(endTime * 0.1).toFloat(), true, leftPaint)
+                drawArc(circle, 270f, -(endTime * 0.1).toFloat(), true, currentMinPaint)
                 val currentAngle = getAngle(endTime * 0.1)
                 val currentPoint =
                     getPoint(
@@ -220,8 +221,17 @@ class TimerView
         }
 
         fun setTime(totalSecond: Int) {
+            Log.e("time", "hour: ${totalSecond / 3600}, min: ${totalSecond % 60}")
             endTime = totalSecond
             invalidate()
+        }
+
+        fun getTime(): Int {
+            return endTime
+        }
+
+        fun setCurrentMinArcColor(color: Int) {
+            currentMinPaint.color = color
         }
 
         private fun getAngle(angle: Double) = (angle * Math.PI / 180).toFloat()
