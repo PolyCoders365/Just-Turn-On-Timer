@@ -25,7 +25,9 @@ android {
     buildFeatures {
         dataBinding = true
     }
-
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -69,6 +71,16 @@ dependencies {
 
     // firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation 'com.google.firebase:firebase-messaging'
     implementation "com.google.firebase:firebase-analytics"
     implementation "com.google.firebase:firebase-database-ktx"
+
+
+    // OAuth 2.0
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.api-client:google-api-client:1.32.2'
+
+    // okhttp3
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 }

@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import jtot.dev.R
@@ -33,7 +34,7 @@ class TimerView
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0,
     ) : View(context, attrs, defStyleAttr) {
-        private val leftPaint =
+        private val currentMinPaint =
             getDefaultPaint().apply {
                 color = ContextCompat.getColor(context, R.color.red)
             }
@@ -120,8 +121,8 @@ class TimerView
                 }
 
                 // 설정된 endTime으로 빨간색 호를 그림
-                drawArc(circle, 270f, -(endTime * 6).toFloat(), true, leftPaint)
-                val currentAngle = getAngle(endTime * 6)
+                drawArc(circle, 270f, -(endTime * 0.1).toFloat(), true, currentMinPaint)
+                val currentAngle = getAngle(endTime * 0.1)
                 val currentPoint =
                     getPoint(
                         currentAngle,
@@ -146,7 +147,7 @@ class TimerView
         private fun Canvas.drawInitBackground(circleRectF: RectF) {
             // 분 선
             minAngleList.forEach { pair ->
-                val angle = getAngle(pair.first)
+                val angle = getAngle(pair.first.toDouble())
                 val fiveMinPoint =
                     getPoint(
                         angle,
@@ -195,7 +196,7 @@ class TimerView
 
             // text
             minAngleList.forEach { pair ->
-                val angle = getAngle(pair.first)
+                val angle = getAngle(pair.first.toDouble())
                 val fiveMinPoint =
 
                     getPoint(
@@ -219,12 +220,21 @@ class TimerView
             drawArc(circleRectF, 270f, 360f, true, circlePaint)
         }
 
-        fun setTime(minute: Int) {
-            endTime = minute
+        fun setTime(totalSecond: Int) {
+            Log.e("time", "hour: ${totalSecond / 3600}, min: ${totalSecond % 60}")
+            endTime = totalSecond
             invalidate()
         }
 
-        private fun getAngle(angle: Int) = (angle * Math.PI / 180).toFloat()
+        fun getTime(): Int {
+            return endTime
+        }
+
+        fun setCurrentMinArcColor(color: Int) {
+            currentMinPaint.color = color
+        }
+
+        private fun getAngle(angle: Double) = (angle * Math.PI / 180).toFloat()
 
         private fun getPoint(
             angle: Float,
