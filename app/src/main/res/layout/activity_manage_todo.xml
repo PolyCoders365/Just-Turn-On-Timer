@@ -99,25 +99,15 @@
             app:layout_constraintTop_toBottomOf="@id/cl_add_container"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/sv_todo_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_search_result"
+                android:id="@+id/rv_todo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/sv_todo_search"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <!--ToDo: 검색 후 아이템 선택시 해당하는 Todo를 보여주는 RecyclerView 추가-->
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_manager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
