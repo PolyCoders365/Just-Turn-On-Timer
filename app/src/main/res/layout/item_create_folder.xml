@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="folder"
-            type="jtot.dev.model.Folder" />
     </data>
 
     <LinearLayout
@@ -19,7 +16,7 @@
             android:id="@+id/layout_folder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_todo_top">
+            android:background="@drawable/background_folder_create">
 
             <Button
                 android:id="@+id/btn_folder"
@@ -33,57 +30,34 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                android:background="@android:color/transparent"
                 android:id="@+id/et_title"
                 style="@style/text.body_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                android:text="@{folder.title}"
+                android:background="@android:color/transparent"
                 android:textColor="@color/on_surface_variant"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_more"
+                app:layout_constraintEnd_toStartOf="@+id/btn_done"
                 app:layout_constraintStart_toEndOf="@+id/btn_folder"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Work" />
 
             <Button
-                app:iconSize="24dp"
-                android:layout_marginEnd="8dp"
+                android:id="@+id/btn_done"
                 style="@style/IconButton"
-                android:id="@+id/btn_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_expand_more_24"
+                android:padding="8dp"
+                app:icon="@drawable/ic_done_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:elevation="1dp"
-            android:orientation="vertical"
-            android:id="@+id/layout_expand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_todo_expand"
-            android:padding="16dp"
-            android:layout_margin="1dp"
-            android:visibility="gone"
-            tools:visibility="visible">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_nest_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
     </LinearLayout>
 
 </layout>

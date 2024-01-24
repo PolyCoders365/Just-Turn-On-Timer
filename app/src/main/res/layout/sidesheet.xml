@@ -40,8 +40,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
                 <Button
                     android:id="@+id/btn_close"
                     style="@style/IconButton"
@@ -51,9 +49,23 @@
                     android:padding="8dp"
                     app:icon="@drawable/ic_close_24"
 
-                    app:iconSize="24dp"
+                    app:iconSize="30dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView4"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+                <Button
+                    android:id="@+id/btn_new_folder"
+                    style="@style/IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:icon="@drawable/ic_create_folder_24"
+
+                    app:iconSize="30dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_close"
                     app:layout_constraintTop_toTopOf="@+id/textView4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,84 +76,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/rv_folder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="24dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:id="@+id/materialDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/button4"
-                    style="@style/IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:padding="8dp"
-                    app:icon="@drawable/ic_search_24"
-                    app:iconSize="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button2"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/button2"
-                    style="@style/IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:icon="@drawable/ic_folder_create_24"
-                    app:iconSize="24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button4"
-                    app:layout_constraintEnd_toStartOf="@+id/button"
-                    app:layout_constraintTop_toTopOf="@+id/button4" />
-
-                <Button
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/button"
-                    style="@style/IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    app:icon="@drawable/ic_menu_24"
-
-                    app:iconSize="24dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/button2" />
-
-                <com.google.android.material.divider.MaterialDivider
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

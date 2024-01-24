@@ -8,6 +8,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import jtot.dev.base.BaseViewModel
 import jtot.dev.model.Folder
+import jtot.dev.utils.addFirst
+import jtot.dev.utils.randomNum
 
 class MainViewModel : BaseViewModel() {
     private val database = FirebaseDatabase.getInstance()
@@ -39,5 +41,20 @@ class MainViewModel : BaseViewModel() {
                 }
             },
         )
+    }
+
+    fun setFolderList(folderList: List<Folder>) {
+        _folderLiveData.value = Folder("folders", docs = folderList)
+    }
+
+    fun getFolderList() = _folderLiveData.value
+
+    fun createFolder(folder: Folder) {
+        val totalFolder = _folderLiveData.value!!
+        val findFolder = totalFolder.findFolder(folder)
+        if (findFolder != null) {
+            findFolder.docs = findFolder.docs.addFirst(Folder("새로운 폴더 ${randomNum()}"))
+        }
+        _folderLiveData.value = totalFolder
     }
 }
