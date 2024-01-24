@@ -1,6 +1,5 @@
 package jtot.dev.feature.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View.INVISIBLE
@@ -23,7 +22,6 @@ class FolderAdapter(
     private val createFolder: (Folder) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private var folderList = mutableListOf<Any>()
-    private lateinit var selectedFoldersDocs: MutableList<Any>
 
     fun setFolderList(list: List<Any>) {
         if (list.isNotEmpty()) {
@@ -61,8 +59,6 @@ class FolderAdapter(
                         false,
                     ),
                     createFolder = { value ->
-
-                        Log.e("CF 1", "!!")
                         createFolder(value)
                     },
                 )
@@ -120,7 +116,6 @@ class FolderAdapter(
 
             is FolderViewHolder -> {
                 holder.bind(folderList[position] as Folder)
-
                 // edittext focus에 따른 수정 기능
                 holder.etTitle.setOnEditorActionListener { v, actionId, event ->
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -136,7 +131,8 @@ class FolderAdapter(
                                 R.drawable.background_folder_create,
                             )
                     } else {
-                        folderList[position] = (folderList[position] as Folder).copy(title = holder.etTitle.text.toString())
+                        folderList[position] =
+                            (folderList[position] as Folder).copy(title = holder.etTitle.text.toString())
                         holder.layoutFolder.background =
                             ContextCompat.getDrawable(
                                 holder.itemView.context,
@@ -144,49 +140,6 @@ class FolderAdapter(
                             )
                     }
                 }
-                /*
-                // expand 처리
-                View.OnClickListener { view ->
-
-                    // var clickedFolder = folderList[position] as Folder
-                    ToggleAnimation.toggleArrow(view = holder.btnMore, isExpanded = holder.isExpand)
-                    if (holder.isExpand) {
-                        ToggleAnimation.expand(holder.layoutExpand)
-                        holder.layoutFolder.background =
-                            ContextCompat.getDrawable(
-                                holder.itemView.context,
-                                R.drawable.background_todo_top_expand,
-                            )
-                    } else {
-                        ToggleAnimation.collapse(holder.layoutExpand)
-                        holder.layoutFolder.background =
-                            ContextCompat.getDrawable(
-                                holder.itemView.context,
-                                R.drawable.background_todo_top,
-                            )
-                    }
-                    holder.isExpand = !(holder.isExpand)
-                    holder.rvNestContent.run {
-                        adapter =
-                            nestAdapter.apply {
-                                holder.bindFolder?.let {
-                                    setFolderList(it.docs)
-                                }
-                            }
-
-                        if (this.itemDecorationCount < 1) {
-                            addItemDecoration(
-                                ContentDecoration(
-                                    holder.itemView.context.dpToPixel(16f).toInt(),
-                                ),
-                            )
-                        }
-                    }
-                }.apply {
-                    holder.btnMore.setOnClickListener(this)
-                    holder.layoutFolder.setOnClickListener(this)
-                }
-                 */
 
                 // 폴더 버튼 처리
                 holder.btnFolder.setOnClickListener {
@@ -195,11 +148,6 @@ class FolderAdapter(
                     popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                         when (menuItem.itemId) {
                             R.id.item_create_folder -> {
-//                                val currentFolder = getFolderList().find { value -> value == holder.bindFolder }
-//                                val newDocs = (folderList[position] as Folder).docs.toMutableList().addFirst(Folder("새로운 폴더"))
-//                                folderList[position] = (folderList[position] as Folder).copy(docs = newDocs)
-//                                createFolder(folderList[position] as Folder)
-
                                 createFolder(holder.bindFolder)
                             }
                         }

@@ -1,6 +1,5 @@
 package jtot.dev.feature.main
 
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import jtot.dev.R
@@ -26,10 +25,18 @@ class FolderViewHolder(
     fun bind(folder: Folder) {
         binding.folder = folder
         bindFolder = folder
+        rvNestContent.adapter =
+            FolderAdapter(
+                createFolder = { value ->
+                    createFolder(value)
+                },
+            ).apply {
+                setFolderList(folder.docs)
+            }
 
         binding.btnMore.setOnClickListener {
             ToggleAnimation.toggleArrow(view = binding.btnMore, isExpanded = isExpand)
-            if (isExpand) {
+            if (!isExpand) {
                 ToggleAnimation.expand(layoutExpand)
                 layoutFolder.background =
                     ContextCompat.getDrawable(
@@ -45,24 +52,13 @@ class FolderViewHolder(
                     )
             }
             isExpand = !(isExpand)
-            rvNestContent.run {
-                adapter =
-                    FolderAdapter(
-                        createFolder = { value ->
-                            Log.e("CF 2", folder.toString())
-                            createFolder(value)
-                        },
-                    ).apply {
-                        setFolderList(folder.docs)
-                    }
 
-                if (this.itemDecorationCount < 1) {
-                    addItemDecoration(
-                        ContentDecoration(
-                            itemView.context.dpToPixel(16f).toInt(),
-                        ),
-                    )
-                }
+            if (rvNestContent.itemDecorationCount < 1) {
+                rvNestContent.addItemDecoration(
+                    ContentDecoration(
+                        itemView.context.dpToPixel(16f).toInt(),
+                    ),
+                )
             }
         }
     }

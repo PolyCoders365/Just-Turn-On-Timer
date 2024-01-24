@@ -56,6 +56,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             Intent(this, PlayActivity::class.java).apply {
             }.run(::startActivity)
         }
+
+        binding.btnNewFolder.setOnClickListener {
+            folderAdapter.createNewFolder()
+        }
         binding.btnClose.setOnClickListener {
             standardSideSheetBehavior.hide()
         }
