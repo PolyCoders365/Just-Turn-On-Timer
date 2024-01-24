@@ -1,6 +1,5 @@
 package jtot.dev.feature.main
 
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import jtot.dev.R
@@ -12,46 +11,67 @@ import jtot.dev.utils.dpToPixel
 
 class FolderViewHolder(
     private val binding: ItemFolderBinding,
+    private val createFolder: (Folder) -> Unit,
+    private val createTodo: (Folder) -> Unit,
+    private val createSchedule: (Folder) -> Unit,
+    private val deleteFolder: (Folder) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var isExpand = false
+    var isExpand = false
+    val layoutFolder = binding.layoutFolder
+    val btnMore = binding.btnMore
+    val btnFolder = binding.btnFolder
+    val layoutExpand = binding.layoutExpand
+    val rvNestContent = binding.rvNestContent
+    val etTitle = binding.etTitle
+    lateinit var bindFolder: Folder
 
     fun bind(folder: Folder) {
         binding.folder = folder
+        bindFolder = folder
+        rvNestContent.adapter =
+            FolderAdapter(
+                createFolder = { value ->
+                    createFolder(value)
+                },
+                createTodo = { value ->
+                    createTodo(value)
+                },
+                createSchedule = { value ->
+                    createSchedule(value)
+                },
+                deleteFolder = { value ->
+                    deleteFolder(value)
+                },
+            ).apply {
+                setFolderList(folder.docs)
+            }
 
-        View.OnClickListener {
+        binding.btnMore.setOnClickListener {
             ToggleAnimation.toggleArrow(view = binding.btnMore, isExpanded = isExpand)
-            if (isExpand) {
-                ToggleAnimation.expand(binding.layoutExpand)
-                binding.layoutFolder.background =
+            if (!isExpand) {
+                ToggleAnimation.expand(layoutExpand)
+                layoutFolder.background =
                     ContextCompat.getDrawable(
-                        binding.root.context,
+                        itemView.context,
                         R.drawable.background_todo_top_expand,
                     )
             } else {
-                ToggleAnimation.collapse(binding.layoutExpand)
-                binding.layoutFolder.background =
+                ToggleAnimation.collapse(layoutExpand)
+                layoutFolder.background =
                     ContextCompat.getDrawable(
-                        binding.root.context,
+                        itemView.context,
                         R.drawable.background_todo_top,
                     )
             }
-            isExpand = !isExpand
-            binding.rvNestContent.run {
-                adapter =
-                    FolderAdapter().apply {
-                        setFolderList(folder.docs)
-                    }
-                if (this.itemDecorationCount < 1) {
-                    addItemDecoration(
-                        ContentDecoration(
-                            binding.root.context.dpToPixel(16f).toInt(),
-                        ),
-                    )
-                }
+            isExpand = !(isExpand)
+
+            if (rvNestContent.itemDecorationCount < 1) {
+                rvNestContent.addItemDecoration(
+                    ContentDecoration(
+                        itemView.context.dpToPixel(16f).toInt(),
+                    ),
+                )
             }
-        }.apply {
-            binding.btnMore.setOnClickListener(this)
-            binding.layoutFolder.setOnClickListener(this)
         }
     }
 }

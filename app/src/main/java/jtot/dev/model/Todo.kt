@@ -3,7 +3,6 @@ package jtot.dev.model
 import jtot.dev.utils.createStringDummy
 
 data class Todo(
-    val star: Boolean = false,
     val tag: String = "",
     val date: String = "",
     val startTime: String = "",
@@ -17,7 +16,6 @@ data class Todo(
         this.copy(
             title = "work",
             content = createStringDummy(),
-            star = false,
             tag = "work",
             date = "2024-01-01",
             startTime = "12:00",
@@ -30,7 +28,6 @@ data class Todo(
         this.copy(
             title = "starWork",
             content = createStringDummy(),
-            star = true,
             tag = "work",
             date = "2024-01-01",
             startTime = "14:00",

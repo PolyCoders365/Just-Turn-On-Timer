@@ -1,7 +1,9 @@
 package jtot.dev
 
+import jtot.dev.model.Folder
 import jtot.dev.model.Schedule
 import jtot.dev.model.Todo
+import jtot.dev.utils.addFirst
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -26,6 +28,44 @@ class ExampleUnitTest {
         val endTime = "11:30"
 
         assertEquals(90, getTimeLength(startTime, endTime))
+    }
+
+    @Test
+    fun folderTest() {
+        val folder =
+            Folder(
+                title = "123",
+                docs =
+                    listOf(
+                        Folder(
+                            title = "work",
+                            docs =
+                                listOf(
+                                    Todo(title = "asd"),
+                                ),
+                        ),
+                        Folder(
+                            title = "star",
+                            docs =
+                                listOf(
+                                    Folder(title = "tfg", docs = listOf()),
+                                ),
+                        ),
+                    ),
+            )
+        val findFolder =
+            folder.findFolder(
+                Folder(
+                    title = "work",
+                    docs =
+                        listOf(
+                            Todo(title = "asd"),
+                        ),
+                ),
+            )
+        findFolder!!.docs = findFolder.docs.addFirst(Folder("새로운 폴더", docs = listOf()))
+
+        print(folder.toString())
     }
 
     fun getTimeLength(

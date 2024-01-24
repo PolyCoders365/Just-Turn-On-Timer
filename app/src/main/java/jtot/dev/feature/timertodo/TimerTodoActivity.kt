@@ -43,6 +43,7 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
             viewModel.setSchedule(
                 it,
             )
+            binding.schedule = it
             contentAdapter.setContentList(it.todos)
         }
 
