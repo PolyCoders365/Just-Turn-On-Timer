@@ -1,10 +1,7 @@
 package jtot.dev.feature.main
 
 import android.view.View
-import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import jtot.dev.R
 import jtot.dev.databinding.ItemContentTodoBinding
@@ -57,16 +54,6 @@ class TodoViewHolder(
         }.apply {
             binding.btnMore.setOnClickListener(this)
             binding.layoutBlock.setOnClickListener(this)
-        }
-
-        if (!todo.star) {
-            // star 아이콘 삭제
-            (binding.btnStar.parent as ViewGroup).removeView(binding.btnStar)
-
-            // titleTextView constraint를 parent인 layout_block으로 변경
-            binding.tvTitle.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                startToStart = R.id.layout_block
-            }
         }
     }
 }

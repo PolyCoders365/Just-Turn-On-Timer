@@ -12,6 +12,9 @@ import jtot.dev.utils.dpToPixel
 class FolderViewHolder(
     private val binding: ItemFolderBinding,
     private val createFolder: (Folder) -> Unit,
+    private val createTodo: (Folder) -> Unit,
+    private val createSchedule: (Folder) -> Unit,
+    private val deleteFolder: (Folder) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     var isExpand = false
     val layoutFolder = binding.layoutFolder
@@ -29,6 +32,15 @@ class FolderViewHolder(
             FolderAdapter(
                 createFolder = { value ->
                     createFolder(value)
+                },
+                createTodo = { value ->
+                    createTodo(value)
+                },
+                createSchedule = { value ->
+                    createSchedule(value)
+                },
+                deleteFolder = { value ->
+                    deleteFolder(value)
                 },
             ).apply {
                 setFolderList(folder.docs)

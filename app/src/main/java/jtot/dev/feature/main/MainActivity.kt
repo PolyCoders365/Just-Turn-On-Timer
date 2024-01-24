@@ -24,6 +24,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             createFolder = { folder ->
                 viewModel.createFolder(folder)
             },
+            createTodo = { folder ->
+                viewModel.createTodo(folder)
+            },
+            createSchedule = { folder ->
+                viewModel.createSchedule(folder)
+            },
+            deleteFolder = { folder ->
+                viewModel.deleteFolder(folder)
+            },
         )
     }
 

@@ -39,6 +39,7 @@ data class Folder(
                         docs =
                             listOf(
                                 Folder(title = "tfg", docs = listOf()),
+                                Schedule(title = "2024-01-01"),
                             ),
                     ),
                 ),
@@ -79,6 +80,25 @@ data class Folder(
         }
 
         // Target folder not found in the current folder or its nested folders
+        return null
+    }
+
+    fun removeFolder(targetFolder: Folder): Folder? {
+        if (this.title == targetFolder.title && this.docs == targetFolder.docs) {
+            return this
+        }
+
+        for (doc in this.docs) {
+            if (doc is Folder) {
+                val foundFolder = doc.removeFolder(targetFolder)
+                if (foundFolder != null) {
+                    val removedDocs = this.docs.toMutableList()
+                    removedDocs.remove(foundFolder)
+                    this.docs = removedDocs
+                    return foundFolder
+                }
+            }
+        }
         return null
     }
 }

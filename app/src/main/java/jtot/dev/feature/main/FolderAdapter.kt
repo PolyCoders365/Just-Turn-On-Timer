@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import jtot.dev.R
 import jtot.dev.databinding.ItemContentBinding
+import jtot.dev.databinding.ItemContentScheduleBinding
 import jtot.dev.databinding.ItemContentTodoBinding
 import jtot.dev.databinding.ItemFolderBinding
 import jtot.dev.model.Folder
@@ -20,6 +21,9 @@ import jtot.dev.utils.addFirst
 
 class FolderAdapter(
     private val createFolder: (Folder) -> Unit,
+    private val createTodo: (Folder) -> Unit,
+    private val createSchedule: (Folder) -> Unit,
+    private val deleteFolder: (Folder) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private var folderList = mutableListOf<Any>()
 
@@ -30,19 +34,8 @@ class FolderAdapter(
         }
     }
 
-    fun getFolderList() = folderList
-
     fun createNewFolder() {
         folderList = folderList.addFirst(Folder("새로운 폴더", listOf())).toMutableList()
-        notifyDataSetChanged()
-    }
-
-    fun deleteLastFolder() {
-        folderList.removeLast()
-    }
-
-    fun addNewFolder(title: String) {
-        folderList.add(Folder(title = title, listOf()))
         notifyDataSetChanged()
     }
 
@@ -61,6 +54,15 @@ class FolderAdapter(
                     createFolder = { value ->
                         createFolder(value)
                     },
+                    createTodo = { value ->
+                        createTodo(value)
+                    },
+                    createSchedule = { value ->
+                        createSchedule(value)
+                    },
+                    deleteFolder = { value ->
+                        deleteFolder(value)
+                    },
                 )
             }
 
@@ -73,7 +75,15 @@ class FolderAdapter(
                     ),
                 )
             }
-            // 3 -> schedule viewholder
+            3 -> {
+                ScheduleViewHolder(
+                    ItemContentScheduleBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false,
+                    ),
+                )
+            }
 
             else -> {
                 TextViewHolder(
@@ -150,10 +160,26 @@ class FolderAdapter(
                             R.id.item_create_folder -> {
                                 createFolder(holder.bindFolder)
                             }
+                            R.id.item_create_todo -> {
+                                createTodo(holder.bindFolder)
+                            }
+                            R.id.item_create_schedule -> {
+                                createSchedule(holder.bindFolder)
+                            }
+                            R.id.item_delete -> {
+                                deleteFolder(holder.bindFolder)
+                            }
                         }
                         true
                     }
                     popup.show()
+                }
+            }
+
+            is ScheduleViewHolder -> {
+                holder.bind(folderList[position] as Schedule)
+                holder.layoutBlock.setOnClickListener {
+                    // TODO: Scheduel 보기 페이지 이동
                 }
             }
         }

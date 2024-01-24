@@ -8,6 +8,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import jtot.dev.base.BaseViewModel
 import jtot.dev.model.Folder
+import jtot.dev.model.Schedule
+import jtot.dev.model.Todo
 import jtot.dev.utils.addFirst
 import jtot.dev.utils.randomNum
 
@@ -55,6 +57,30 @@ class MainViewModel : BaseViewModel() {
         if (findFolder != null) {
             findFolder.docs = findFolder.docs.addFirst(Folder("새로운 폴더 ${randomNum()}"))
         }
+        _folderLiveData.value = totalFolder
+    }
+
+    fun createTodo(folder: Folder) {
+        val totalFolder = _folderLiveData.value!!
+        val findFolder = totalFolder.findFolder(folder)
+        if (findFolder != null) {
+            findFolder.docs = findFolder.docs.addFirst(Todo(title = "새로운 Todo"))
+        }
+        _folderLiveData.value = totalFolder
+    }
+
+    fun createSchedule(folder: Folder) {
+        val totalFolder = _folderLiveData.value!!
+        val findFolder = totalFolder.findFolder(folder)
+        if (findFolder != null) {
+            findFolder.docs = findFolder.docs.addFirst(Schedule(title = "새로운 Schedule"))
+        }
+        _folderLiveData.value = totalFolder
+    }
+
+    fun deleteFolder(folder: Folder) {
+        val totalFolder = _folderLiveData.value!!
+        totalFolder.removeFolder(folder)
         _folderLiveData.value = totalFolder
     }
 }
