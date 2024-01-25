@@ -15,14 +15,17 @@
         android:theme="@style/Theme.JTOT"
         tools:targetApi="31">
         <activity
-            android:name=".feature.task.ManageScheduleActivity"
+            android:name=".feature.onboarding.AlarmSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.onboarding.OnBoardingActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+            android:name=".feature.setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".feature.task.ManageScheduleActivity"
+            android:exported="false" />
         <activity
             android:name=".feature.task.ManageTodoActivity"
             android:exported="true">
@@ -36,7 +39,13 @@
             android:exported="true" />
         <activity
             android:name=".feature.main.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".feature.timertodo.MyFirebaseMessagingService"

@@ -26,9 +26,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/background_todo_top">
 
-
-
-
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/text.body_medium"
@@ -58,6 +55,8 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:layout_margin="1dp"
+            android:elevation="1dp"
             android:orientation="vertical"
             android:id="@+id/layout_expand"
             android:layout_width="match_parent"
@@ -74,6 +73,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="16dp"
                 android:id="@+id/rv_nest_content"

@@ -15,6 +15,8 @@ class TodoViewHolder(
     private val binding: ItemContentTodoBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
     private var isExpand = false
+    var btnMore = binding.btnMore
+    var layoutBlock = binding.layoutBlock
 
     fun bind(todo: Todo) {
         binding.todo = todo

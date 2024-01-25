@@ -24,3 +24,10 @@ fun <T : Serializable> Intent.intentSerializable(
 }
 
 fun Date.convertToFormat(): String = SimpleDateFormat("yyyy-MM-dd").format(this)
+
+fun <T> List<T>.addFirst(first: T): List<T> {
+    val newList = mutableListOf<T>()
+    newList.add(first)
+    newList.addAll(this)
+    return newList
+}

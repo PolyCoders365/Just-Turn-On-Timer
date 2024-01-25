@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="folder"
-            type="jtot.dev.model.Folder" />
     </data>
 
     <LinearLayout
@@ -19,7 +16,7 @@
             android:id="@+id/layout_folder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_todo_top">
+            android:background="@drawable/background_folder_create">
 
             <Button
                 android:id="@+id/btn_folder"
@@ -40,50 +37,27 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
                 android:background="@android:color/transparent"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:text="@{folder.title}"
                 android:textColor="@color/on_surface_variant"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_more"
+                app:layout_constraintEnd_toStartOf="@+id/btn_done"
                 app:layout_constraintStart_toEndOf="@+id/btn_folder"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Work" />
 
             <Button
-                android:id="@+id/btn_more"
+                android:id="@+id/btn_done"
                 style="@style/IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_expand_more_24"
-                app:iconSize="24dp"
+                android:padding="8dp"
+                app:icon="@drawable/ic_done_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_expand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:background="@drawable/background_todo_expand"
-            android:elevation="1dp"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_nest_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
     </LinearLayout>
 
 </layout>
