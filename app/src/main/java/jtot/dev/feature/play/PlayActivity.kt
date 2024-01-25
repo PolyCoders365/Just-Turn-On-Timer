@@ -16,7 +16,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>(R.layout.activity_play) {
     private val contentAdapter: ContentAdapter by lazy {
         ContentAdapter().apply {
             setContentList(
-                schedule.todos,
+                schedule.contents,
             )
         }
     }

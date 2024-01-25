@@ -7,7 +7,7 @@ import java.util.Locale
 
 fun getTodoList(schedule: Schedule): MutableList<Todo> {
     return mutableListOf<Todo>().apply {
-        schedule.todos.forEach { content ->
+        schedule.contents.forEach { content ->
             if (content is Todo) {
                 add(content)
             }
