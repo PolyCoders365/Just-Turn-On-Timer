@@ -15,8 +15,11 @@
         android:theme="@style/Theme.JTOT"
         tools:targetApi="31">
         <activity
+            android:name=".feature.onboarding.AlarmSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".feature.onboarding.OnBoardingActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,9 +31,7 @@
             android:exported="false" />
         <activity
             android:name=".feature.task.ManageTodoActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".feature.timertodo.TimerTodoActivity"
             android:exported="true" />
