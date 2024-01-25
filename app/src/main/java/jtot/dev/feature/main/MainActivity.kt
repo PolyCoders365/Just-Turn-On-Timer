@@ -10,6 +10,7 @@ import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityMainBinding
 import jtot.dev.feature.play.PlayActivity
 import jtot.dev.feature.play.decoration.ContentDecoration
+import jtot.dev.feature.setting.SettingActivity
 import jtot.dev.model.Folder
 import jtot.dev.utils.dpToPixel
 
@@ -52,8 +53,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         binding.babAppbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.item_main_today -> {
+                R.id.item_main_folder -> {
                     standardSideSheetBehavior.expand()
+                    true
+                }
+                R.id.item_main_settings -> {
+                    Intent(this, SettingActivity::class.java).apply {
+                    }.run(::startActivity)
                     true
                 }
 

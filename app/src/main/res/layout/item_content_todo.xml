@@ -67,6 +67,8 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
+            android:layout_margin="1dp"
+            android:elevation="1dp"
             android:orientation="vertical"
             android:id="@+id/layout_expand"
             android:layout_width="match_parent"

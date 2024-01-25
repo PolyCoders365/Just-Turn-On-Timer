@@ -33,15 +33,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:inputType="text"
-                android:imeOptions="actionDone"
-                android:background="@android:color/transparent"
                 android:id="@+id/et_title"
                 style="@style/text.body_medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
+                android:background="@android:color/transparent"
+                android:imeOptions="actionDone"
+                android:inputType="text"
                 android:text="@{folder.title}"
                 android:textColor="@color/on_surface_variant"
                 android:textStyle="bold"
@@ -52,13 +52,13 @@
                 tools:text="Work" />
 
             <Button
-                app:iconSize="24dp"
-                android:layout_marginEnd="8dp"
-                style="@style/IconButton"
                 android:id="@+id/btn_more"
+                style="@style/IconButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 app:icon="@drawable/ic_expand_more_24"
+                app:iconSize="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -66,14 +66,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:elevation="1dp"
-            android:orientation="vertical"
             android:id="@+id/layout_expand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_todo_expand"
-            android:padding="16dp"
             android:layout_margin="1dp"
+            android:background="@drawable/background_todo_expand"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            android:padding="16dp"
             android:visibility="gone"
             tools:visibility="visible">
 
