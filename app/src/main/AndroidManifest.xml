@@ -28,7 +28,9 @@
             android:exported="false" />
         <activity
             android:name=".feature.task.ManageTodoActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".feature.timertodo.TimerTodoActivity"
             android:exported="true" />

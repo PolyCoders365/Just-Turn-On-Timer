@@ -41,7 +41,7 @@ class TodoViewHolder(
             binding.rvNestContent.run {
                 adapter =
                     ContentAdapter().apply {
-                        setContentList(todo.todos)
+                        setContentList(todo.contents)
                     }
                 if (this.itemDecorationCount < 1) {
                     addItemDecoration(

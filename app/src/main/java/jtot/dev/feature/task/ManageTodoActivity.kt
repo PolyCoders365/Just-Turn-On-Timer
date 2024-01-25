@@ -1,23 +1,24 @@
 package jtot.dev.feature.task
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.datepicker.MaterialDatePicker
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityManageTodoBinding
+import jtot.dev.model.Todo
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.activity_manage_todo) {
     private lateinit var datePicker: MaterialDatePicker<Long>
+    private val manageTodoViewModel: ManageTodoViewModel by viewModels()
+    private lateinit var taskAdapter: TaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // EditText에 포커스 주기
-        binding.etTitle.requestFocus()
 
         // DatePicker 초기화
         datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Select date").build()
@@ -71,6 +72,41 @@ class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.acti
                 }
                 show()
             }
+        }
+
+        taskAdapter =
+            TaskAdapter(
+                object : TaskAdapter.OnAddTodoClickListener {
+                    override fun onAddTodoClick(title: String) {
+                        manageTodoViewModel.addTodo(Todo(title))
+                    }
+                },
+            )
+
+        binding.rvTodo.adapter = taskAdapter
+
+        // Observe the LiveData
+        manageTodoViewModel.todoList.observe(this) { todoList ->
+            taskAdapter.updateList(todoList)
+        }
+
+        taskAdapter.setOnSearchQueryChangedListener(
+            object : TaskAdapter.OnSearchQueryChanged {
+                override fun onSearchQueryChanged(query: String) {
+                    manageTodoViewModel.search(query)
+                }
+            },
+        )
+
+        manageTodoViewModel.searchResults.observe(this) { results ->
+            taskAdapter.updateSearchResults(results)
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            binding.etTitle.requestFocus()
         }
     }
 }

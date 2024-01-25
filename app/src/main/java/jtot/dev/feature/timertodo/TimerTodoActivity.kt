@@ -43,8 +43,7 @@ class TimerTodoActivity : BaseActivity<ActivityTimerTodoBinding>(
             viewModel.setSchedule(
                 it,
             )
-            binding.schedule = it
-            contentAdapter.setContentList(it.todos)
+            contentAdapter.setContentList(it.contents)
         }
 
         maxTodoIndex = getTodoList(viewModel.getSchedule()).size
