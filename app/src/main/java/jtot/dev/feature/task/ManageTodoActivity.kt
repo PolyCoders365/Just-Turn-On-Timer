@@ -7,7 +7,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityManageTodoBinding
-import jtot.dev.model.Todo
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -58,30 +57,20 @@ class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.acti
             // PopupMenu로 생성하는데 기본적인 Toolbar 내의 PopupMenu로 구현한 것이 아니어서 리플렉션을 활용해서 아이콘을 강제 표시함
             PopupMenu(this, view).apply {
                 menuInflater.inflate(R.menu.menu_manage_todo_option_menu, menu)
-                try {
-                    val fields = menu.javaClass.declaredFields
-                    for (field in fields) {
-                        if ("mOptionalIconsVisible" == field.name) {
-                            field.isAccessible = true
-                            field.setBoolean(menu, true)
-                            break
-                        }
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                setForceShowIcon(true)
+
                 show()
             }
         }
 
-        taskAdapter =
-            TaskAdapter(
-                object : TaskAdapter.OnAddTodoClickListener {
-                    override fun onAddTodoClick(title: String) {
-                        manageTodoViewModel.addTodo(Todo(title))
-                    }
-                },
-            )
+//        taskAdapter =
+//            TaskAdapter(
+//                object : TaskAdapter.OnAddTodoClickListener {
+//                    override fun onAddTodoClick(title: String) {
+//                        manageTodoViewModel.addTodo(Todo(title))
+//                    }
+//                },
+//            )
 
         binding.rvTodo.adapter = taskAdapter
 

@@ -83,6 +83,22 @@ data class Folder(
         return null
     }
 
+    fun findTodo(targetTodoTitle: String): List<Todo>? {
+        val todosInFolder = mutableListOf<Todo>()
+
+        // Check if the current folder has Todos
+        if (this.docs.any { it is Todo && it.title.contains(targetTodoTitle) }) {
+            todosInFolder.addAll(this.docs.filterIsInstance<Todo>().filter { it.title.contains(targetTodoTitle) })
+        }
+
+        // Check nested folders
+        this.docs.filterIsInstance<Folder>().forEach { nestedFolder ->
+            findTodo(targetTodoTitle)?.let { todosInFolder.addAll(it) }
+        }
+
+        return todosInFolder
+    }
+
     fun removeFolder(targetFolder: Folder): Folder? {
         if (this.title == targetFolder.title && this.docs == targetFolder.docs) {
             return this

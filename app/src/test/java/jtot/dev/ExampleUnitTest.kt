@@ -68,6 +68,36 @@ class ExampleUnitTest {
         print(folder.toString())
     }
 
+    @Test
+    fun findTodoTest() {
+        val folder =
+            Folder(
+                title = "123",
+                docs =
+                    listOf(
+                        Folder(
+                            title = "work",
+                            docs =
+                                listOf(
+                                    Todo(title = "asd", date = "1"),
+                                ),
+                        ),
+                        Folder(
+                            title = "star",
+                            docs =
+                                listOf(
+                                    Folder(title = "tfg", docs = listOf()),
+                                    Todo(title = "asd", date = "2"),
+                                ),
+                        ),
+                    ),
+            )
+
+        folder.findTodo("asd")
+
+        print(folder.findTodo("asd").toString())
+    }
+
     fun getTimeLength(
         startTime: String,
         endTime: String,
@@ -86,11 +116,11 @@ class ExampleUnitTest {
 
     private fun getTodoList(schedule: Schedule): MutableList<Todo> {
         return mutableListOf<Todo>().apply {
-            schedule.todos.forEach { content ->
-                if (content is Todo) {
-                    add(content)
-                }
-            }
+//            schedule.todos.forEach { content ->
+//                if (content is Todo) {
+//                    add(content)
+//                }
+//            }
         }
     }
 }

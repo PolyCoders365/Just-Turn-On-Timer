@@ -3,6 +3,7 @@ package jtot.dev.feature.task
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import jtot.dev.base.BaseViewModel
+import jtot.dev.model.Folder
 import jtot.dev.model.Todo
 
 class ManageTodoViewModel : BaseViewModel() {
@@ -10,7 +11,7 @@ class ManageTodoViewModel : BaseViewModel() {
         MutableLiveData<List<Any>>().apply {
             value =
                 listOf(
-                    Todo("Todo 1"),
+                    Todo("Todo 1").createStarDummy(),
                 )
         }
     val todoList: LiveData<List<Any>> = _todoList
@@ -24,7 +25,12 @@ class ManageTodoViewModel : BaseViewModel() {
     }
 
     fun search(query: String) {
-        val results = _todoList.value?.filter { it is Todo && (it as Todo).title.contains(query) } ?: listOf()
-        _searchResults.value = results
+        // 전체 데이터에서 query를 포함한 데이터를 가져오고
+        val folder = Folder()
+        val findList = folder.findTodo(query)
+        // findList를 searhList에 업데이트
+
+//        val results = _todoList.value?.filter { it is Todo && (it as Todo).title.contains(query) } ?: listOf()
+//        _searchResults.value = results
     }
 }

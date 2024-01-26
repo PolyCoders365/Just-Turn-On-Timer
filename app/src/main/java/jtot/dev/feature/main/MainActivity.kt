@@ -11,6 +11,8 @@ import jtot.dev.databinding.ActivityMainBinding
 import jtot.dev.feature.play.PlayActivity
 import jtot.dev.feature.play.decoration.ContentDecoration
 import jtot.dev.feature.setting.SettingActivity
+import jtot.dev.feature.task.ManageScheduleActivity
+import jtot.dev.feature.task.ManageTodoActivity
 import jtot.dev.model.Folder
 import jtot.dev.utils.dpToPixel
 
@@ -33,6 +35,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             },
             deleteFolder = { folder ->
                 viewModel.deleteFolder(folder)
+            },
+            onTodoClicked = { todo ->
+                Intent(this, ManageTodoActivity::class.java).apply {
+                    putExtra("Todo", todo)
+                }.run(::startActivity)
+            },
+            onScheduleClicked = { schedule ->
+                Intent(this, ManageScheduleActivity::class.java).apply {
+                    putExtra("Schedule", schedule)
+                }.run(::startActivity)
             },
         )
     }

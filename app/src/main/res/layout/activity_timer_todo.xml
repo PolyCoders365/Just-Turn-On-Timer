@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="schedule"
             type="jtot.dev.model.Schedule" />
+
         <variable
             name="todo"
             type="jtot.dev.model.Todo" />
+
         <variable
             name="title"
             type="String" />
+
         <variable
             name="time"
             type="String" />
@@ -24,9 +28,9 @@
         tools:context=".feature.timertodo.TimerTodoActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <jtot.dev.feature.timertodo.timerview.TimerView
                 android:id="@+id/timer"
@@ -38,27 +42,28 @@
             <TextView
                 android:id="@+id/textView2"
                 style="@style/text.headline_medium"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:text="@{title}"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/timer"
                 tools:text="title" />
 
             <TextView
-                android:layout_marginTop="16dp"
                 style="@style/text.title_large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@{time}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:text="time" />
+
             <Button
                 android:id="@+id/btn_play"
                 style="?attr/materialIconButtonFilledStyle"
@@ -84,9 +89,9 @@
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"> <!-- Drag handle for accessibility -->
+                android:layout_height="match_parent">
+
                 <com.google.android.material.bottomsheet.BottomSheetDragHandleView
                     android:id="@+id/drag_handle"
                     android:layout_width="match_parent"
@@ -105,7 +110,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/drag_handle"
                     tools:text="title" />
-
 
 
                 <androidx.recyclerview.widget.RecyclerView

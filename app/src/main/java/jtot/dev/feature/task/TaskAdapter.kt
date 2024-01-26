@@ -11,9 +11,12 @@ import jtot.dev.databinding.ItemContentBinding
 import jtot.dev.databinding.ItemContentTodoBinding
 import jtot.dev.databinding.ItemSearchBinding
 import jtot.dev.databinding.ItemSearchResultBinding
+import jtot.dev.feature.main.TodoViewHolder
 import jtot.dev.model.Todo
 
-class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : RecyclerView.Adapter<ViewHolder>() {
+class TaskAdapter(
+    private val findTodo: (String) -> Unit,
+) : RecyclerView.Adapter<ViewHolder>() {
     private var task: List<Any> = listOf()
     private var searchResults: List<Any> = listOf()
     var currentSearchText: String = ""
@@ -41,8 +44,7 @@ class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : 
                 object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
                         val query = s.toString()
-                        currentSearchText = query
-                        onSearchQueryChanged?.onSearchQueryChanged(query)
+                        findTodo(query)
                     }
 
                     override fun beforeTextChanged(
@@ -68,9 +70,9 @@ class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : 
     inner class ItemSearchResultViewHolder(val binding: ItemSearchResultBinding) :
         ViewHolder(binding.root) {
         init {
-            binding.btnAddTodo.setOnClickListener {
-                onAddTodoClickListener.onAddTodoClick(currentSearchText)
-            }
+//            binding.btnAddTodo.setOnClickListener {
+//                onAddTodoClickListener.onAddTodoClick(currentSearchText)
+//            }
         }
 
         fun bind(todo: Todo?) {
@@ -84,13 +86,6 @@ class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : 
                 binding.tvTitle.visibility = View.GONE
                 binding.tvReference.visibility = View.GONE
             }
-        }
-    }
-
-    inner class ItemContentTodoViewHolder(val binding: ItemContentTodoBinding) :
-        ViewHolder(binding.root) {
-        fun bind(todo: Todo) {
-            binding.todo = todo
         }
     }
 
@@ -122,7 +117,7 @@ class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : 
                         parent,
                         false,
                     )
-                ItemContentTodoViewHolder(binding)
+                TodoViewHolder(binding)
             }
 
             TYPE_CONTENT_STRING -> {
@@ -168,7 +163,7 @@ class TaskAdapter(private val onAddTodoClickListener: OnAddTodoClickListener) : 
         position: Int,
     ) {
         when (holder) {
-            is ItemContentTodoViewHolder -> {
+            is TodoViewHolder -> {
                 // Ensure the object is of type Todo before binding
                 if (task[position] is Todo) {
                     holder.bind(task[position] as Todo)

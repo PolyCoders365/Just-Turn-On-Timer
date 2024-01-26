@@ -1,11 +1,13 @@
 package jtot.dev.feature.main
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -24,6 +26,8 @@ class FolderAdapter(
     private val createTodo: (Folder) -> Unit,
     private val createSchedule: (Folder) -> Unit,
     private val deleteFolder: (Folder) -> Unit,
+    private val onTodoClicked: (Todo) -> Unit,
+    private val onScheduleClicked: (Schedule) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
     private var folderList = mutableListOf<Any>()
 
@@ -63,6 +67,12 @@ class FolderAdapter(
                     deleteFolder = { value ->
                         deleteFolder(value)
                     },
+                    onTodoClicked = { value ->
+                        onTodoClicked(value)
+                    },
+                    onScheduleClicked = { value ->
+                        onScheduleClicked(value)
+                    },
                 )
             }
 
@@ -75,6 +85,7 @@ class FolderAdapter(
                     ),
                 )
             }
+
             3 -> {
                 ScheduleViewHolder(
                     ItemContentScheduleBinding.inflate(
@@ -111,6 +122,7 @@ class FolderAdapter(
 
     override fun getItemCount(): Int = folderList.size
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
@@ -120,7 +132,7 @@ class FolderAdapter(
                 holder.bind(folderList[position] as Todo)
                 holder.btnMore.visibility = INVISIBLE
                 holder.layoutBlock.setOnClickListener {
-                    // TODO: Todo 보기 페이지 이동
+                    onTodoClicked(folderList[position] as Todo)
                 }
             }
 
@@ -155,17 +167,21 @@ class FolderAdapter(
                 holder.btnFolder.setOnClickListener {
                     val popup = PopupMenu(holder.itemView.context, it)
                     popup.menuInflater.inflate(R.menu.menu_folder, popup.menu)
+                    popup.setForceShowIcon(true)
                     popup.setOnMenuItemClickListener { menuItem: MenuItem ->
                         when (menuItem.itemId) {
                             R.id.item_create_folder -> {
                                 createFolder(holder.bindFolder)
                             }
+
                             R.id.item_create_todo -> {
                                 createTodo(holder.bindFolder)
                             }
+
                             R.id.item_create_schedule -> {
                                 createSchedule(holder.bindFolder)
                             }
+
                             R.id.item_delete -> {
                                 deleteFolder(holder.bindFolder)
                             }
@@ -179,7 +195,7 @@ class FolderAdapter(
             is ScheduleViewHolder -> {
                 holder.bind(folderList[position] as Schedule)
                 holder.layoutBlock.setOnClickListener {
-                    // TODO: Scheduel 보기 페이지 이동
+                    onScheduleClicked(folderList[position] as Schedule)
                 }
             }
         }

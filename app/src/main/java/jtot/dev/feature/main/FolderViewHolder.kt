@@ -7,6 +7,8 @@ import jtot.dev.databinding.ItemFolderBinding
 import jtot.dev.feature.play.decoration.ContentDecoration
 import jtot.dev.feature.play.decoration.ToggleAnimation
 import jtot.dev.model.Folder
+import jtot.dev.model.Schedule
+import jtot.dev.model.Todo
 import jtot.dev.utils.dpToPixel
 
 class FolderViewHolder(
@@ -15,6 +17,8 @@ class FolderViewHolder(
     private val createTodo: (Folder) -> Unit,
     private val createSchedule: (Folder) -> Unit,
     private val deleteFolder: (Folder) -> Unit,
+    private val onTodoClicked: (Todo) -> Unit,
+    private val onScheduleClicked: (Schedule) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     var isExpand = false
     val layoutFolder = binding.layoutFolder
@@ -41,6 +45,12 @@ class FolderViewHolder(
                 },
                 deleteFolder = { value ->
                     deleteFolder(value)
+                },
+                onTodoClicked = { value ->
+                    onTodoClicked(value)
+                },
+                onScheduleClicked = { value ->
+                    onScheduleClicked(value)
                 },
             ).apply {
                 setFolderList(folder.docs)

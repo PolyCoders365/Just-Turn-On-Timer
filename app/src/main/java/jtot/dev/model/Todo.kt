@@ -1,5 +1,7 @@
 package jtot.dev.model
 
+import java.io.Serializable
+
 data class Todo(
     val title: String = "",
     val date: String = "",
@@ -7,7 +9,7 @@ data class Todo(
     val endTime: String = "",
     val breakTime: String = "",
     val contents: List<Any> = listOf(),
-) {
+) : Serializable {
 //    fun createDummy() =
 //        this.copy(
 //            title = "work",
@@ -58,7 +60,7 @@ data class Todo(
                 startTime = "14:00",
                 endTime = "15:00",
                 breakTime = "30",
-                contents = listOf(Schedule().createDummy(depth - 1), Todo().createDummy(depth - 1)),
+                contents = listOf(Todo().createDummy(depth - 1)),
             )
         } else {
             this.copy(
@@ -80,7 +82,6 @@ data class Todo(
             "endTime" to endTime,
             "breakTime" to breakTime,
             "contents" to contents,
-
         )
     }
 }
