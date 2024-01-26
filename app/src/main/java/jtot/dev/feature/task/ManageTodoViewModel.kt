@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import jtot.dev.base.BaseViewModel
 import jtot.dev.model.Folder
+import jtot.dev.model.Schedule
 import jtot.dev.model.Todo
 
 class ManageTodoViewModel : BaseViewModel() {
@@ -17,6 +18,20 @@ class ManageTodoViewModel : BaseViewModel() {
     val todoList: LiveData<List<Any>> = _todoList
     private var _searchResults = MutableLiveData<List<Any>>()
     val searchResults: LiveData<List<Any>> = _searchResults
+    private var tempSchedule = Schedule()
+    private var tempTodo = Todo()
+
+    fun setTempSchedule(schedule: Schedule) {
+        tempSchedule = schedule
+    }
+
+    fun getTempSchedule() = tempSchedule
+
+    fun setTempTodo(todo: Todo) {
+        tempTodo = todo
+    }
+
+    fun getTempTodo() = tempTodo
 
     fun addTodo(todo: Todo) {
         val currentList = _todoList.value?.toMutableList() ?: mutableListOf()

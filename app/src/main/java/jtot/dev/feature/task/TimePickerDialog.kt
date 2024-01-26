@@ -10,6 +10,13 @@ class TimePickerDialog(
     private val onConfirm: (String, String, String) -> Unit,
 ) : AlertDialog(context) {
     private lateinit var binding: DialogTimePickerBinding
+    private var startTime = ""
+    private var endTime = ""
+    private var breakTime = ""
+
+    fun getStartTime() = startTime
+    fun getEndTime() = endTime
+    fun getBreakTime() = breakTime
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,9 +24,9 @@ class TimePickerDialog(
         setContentView(binding.root)
 
         binding.btnConfirm.setOnClickListener {
-            val startTime = "${binding.tietStartTimeHourText.text}:${binding.tietStartTimeMinuteText.text}"
-            val endTime = "${binding.tietEndTimeHourText.text}:${binding.tietEndTimeMinuteText.text}"
-            val breakTime = binding.etBreakTime.text.toString()
+            startTime = "${binding.tietStartTimeHourText.text}:${binding.tietStartTimeMinuteText.text}"
+            endTime = "${binding.tietEndTimeHourText.text}:${binding.tietEndTimeMinuteText.text}"
+            breakTime = binding.etBreakTime.text.toString()
 
             onConfirm(startTime, endTime, breakTime)
             dismiss()

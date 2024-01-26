@@ -17,7 +17,7 @@ import jtot.dev.model.Todo
 class TaskAdapter(
     private val findTodo: (String) -> Unit,
 ) : RecyclerView.Adapter<ViewHolder>() {
-    private var task: List<Any> = listOf()
+    private var contentsList: List<Any> = listOf()
     private var searchResults: List<Any> = listOf()
     var currentSearchText: String = ""
 
@@ -27,6 +27,9 @@ class TaskAdapter(
         private const val TYPE_CONTENT_TODO = 2
         private const val TYPE_CONTENT_STRING = 3
     }
+
+    fun getContentsList() = contentsList
+
 
     inner class ItemContentStringViewHolder(val binding: ItemContentBinding) :
         ViewHolder(binding.root) {
@@ -130,26 +133,26 @@ class TaskAdapter(
         }
     }
 
-    override fun getItemCount(): Int = task.size + 1 + if (searchResults.isEmpty()) 1 else searchResults.size
+    override fun getItemCount(): Int = contentsList.size + 1 + if (searchResults.isEmpty()) 1 else searchResults.size
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            position < task.size -> {
-                when (task[position]) {
+            position < contentsList.size -> {
+                when (contentsList[position]) {
                     is Todo -> TYPE_CONTENT_TODO
                     is String -> TYPE_CONTENT_STRING
                     else -> throw IllegalArgumentException("Invalid type")
                 }
             }
 
-            position == task.size -> TYPE_SEARCH
-            position == task.size + 1 && searchResults.isEmpty() -> TYPE_SEARCH_RESULT
+            position == contentsList.size -> TYPE_SEARCH
+            position == contentsList.size + 1 && searchResults.isEmpty() -> TYPE_SEARCH_RESULT
             else -> TYPE_SEARCH_RESULT
         }
     }
 
     fun updateList(newList: List<Any>) {
-        task = newList
+        contentsList = newList
         notifyDataSetChanged()
     }
 
@@ -165,8 +168,8 @@ class TaskAdapter(
         when (holder) {
             is TodoViewHolder -> {
                 // Ensure the object is of type Todo before binding
-                if (task[position] is Todo) {
-                    holder.bind(task[position] as Todo)
+                if (contentsList[position] is Todo) {
+                    holder.bind(contentsList[position] as Todo)
                 }
             }
 
@@ -178,7 +181,7 @@ class TaskAdapter(
             }
 
             is ItemSearchResultViewHolder -> {
-                val searchPosition = position - task.size - 1
+                val searchPosition = position - contentsList.size - 1
                 if (searchPosition < searchResults.size && searchResults[searchPosition] is Todo) {
                     holder.bind(searchResults[searchPosition] as Todo)
                 } else if (searchResults.isEmpty()) {
@@ -187,8 +190,8 @@ class TaskAdapter(
             }
 
             is ItemContentStringViewHolder -> {
-                if (task[position] is String) {
-                    holder.bind(task[position] as String)
+                if (contentsList[position] is String) {
+                    holder.bind(contentsList[position] as String)
                 }
             }
         }

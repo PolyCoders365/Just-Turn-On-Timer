@@ -1,20 +1,36 @@
 package jtot.dev.feature.task
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.datepicker.MaterialDatePicker
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityManageTodoBinding
+import jtot.dev.model.Todo
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.activity_manage_todo) {
     private lateinit var datePicker: MaterialDatePicker<Long>
-    private val manageTodoViewModel: ManageTodoViewModel by viewModels()
-    private lateinit var taskAdapter: TaskAdapter
+    private val timePickerDialog: TimePickerDialog by lazy {
+        TimePickerDialog(
+            this,
+            onConfirm = { startTime, endTime, breakTime ->
+                binding.tietTimeText.setText("$startTime ~ $endTime break $breakTime minute")
+            },
+        )
+    }
+    private val viewModel: ManageTodoViewModel by viewModels()
+    private val taskAdapter: TaskAdapter by lazy {
+        TaskAdapter(
+            findTodo = {
+                //
+            }
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +63,7 @@ class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.acti
         }
 
         binding.tilTimePicker.setOnClickListener {
-            TimePickerDialog(this) { startTime, endTime, breakTime ->
-                binding.tietTimeText.setText("$startTime ~ $endTime break $breakTime minute")
-            }.show()
+            timePickerDialog.show()
         }
 
         // Option Menu 아이콘에 클릭 리스너 설정
@@ -75,19 +89,19 @@ class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.acti
         binding.rvTodo.adapter = taskAdapter
 
         // Observe the LiveData
-        manageTodoViewModel.todoList.observe(this) { todoList ->
+        viewModel.todoList.observe(this) { todoList ->
             taskAdapter.updateList(todoList)
         }
 
         taskAdapter.setOnSearchQueryChangedListener(
             object : TaskAdapter.OnSearchQueryChanged {
                 override fun onSearchQueryChanged(query: String) {
-                    manageTodoViewModel.search(query)
+                    viewModel.search(query)
                 }
             },
         )
 
-        manageTodoViewModel.searchResults.observe(this) { results ->
+        viewModel.searchResults.observe(this) { results ->
             taskAdapter.updateSearchResults(results)
         }
     }
@@ -97,5 +111,21 @@ class ManageTodoActivity : BaseActivity<ActivityManageTodoBinding>(R.layout.acti
         if (hasFocus) {
             binding.etTitle.requestFocus()
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val saveTodo = Todo(
+            title = binding.etTitle.text.toString(),
+            date = binding.tietDateText.text.toString(),
+            startTime = timePickerDialog.getStartTime(),
+            endTime = timePickerDialog.getEndTime(),
+            breakTime = timePickerDialog.getBreakTime(),
+            contents = taskAdapter.getContentsList()
+        )
+
+        viewModel.setTempTodo(saveTodo)
+        Log.e("savedTodo Check", viewModel.getTempTodo().toString())
     }
 }

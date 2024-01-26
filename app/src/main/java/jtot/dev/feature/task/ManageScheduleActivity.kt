@@ -1,12 +1,14 @@
 package jtot.dev.feature.task
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.datepicker.MaterialDatePicker
 import jtot.dev.R
 import jtot.dev.base.BaseActivity
 import jtot.dev.databinding.ActivityManageScheduleBinding
+import jtot.dev.model.Schedule
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -67,5 +69,17 @@ class ManageScheduleActivity : BaseActivity<ActivityManageScheduleBinding>(R.lay
         viewModel.searchResults.observe(this) { results ->
             taskAdapter.updateSearchResults(results)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        val saveSchedule = Schedule(
+            title = binding.tvTitle.text.toString(),
+            contents = taskAdapter.getContentsList()
+        )
+        viewModel.setTempSchedule(saveSchedule)
+        Log.e("saveSchedule Check", viewModel.getTempSchedule().toString())
+
     }
 }
